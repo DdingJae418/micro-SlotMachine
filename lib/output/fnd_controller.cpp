@@ -1,82 +1,54 @@
-#include <fnd_controller.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include "fnd_controller.h"
 
-FNDController* FNDController::Instance = nullptr;
+/*** Const Variables ***/
+const vector<unsigned char> number = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+const vector<unsigned char> fnd_select = {0x08, 0x04, 0x02, 0x01};
+const vector<unsigned char> play = {0x73, 0x38, 0x77, 0x6E};
 
-FNDController::FNDController()
+
+FNDController* FNDController::GetInstance()
 {
-    // Single tone pattern
-    if(Instance == nullptr)
+    if(!instance)
     {
-        Instance = this;
-        currentDigit = 0;
+        instance = new FNDController();
         
         // Set FND pin
         DDRC = 0xFF;
         DDRG = 0x0F;
-
-        // Initialize timer
-        TCCR1A = 0; // CTC 모드 설정
-        TCCR1B = (1 << WGM12) | (1 << CS12); // CTC 모드, 분주비 256
-        OCR1A = 2500; // 약 1ms 간격 (16MHz / 256 / 2500 = 1ms)
-        TIMSK = (1 << OCIE1A); // 타이머 비교 일치 인터럽트 활성화
-        
-        // Set entire area interrupt
         sei(); 
     }
+    return instance;
 }
 
 void FNDController::SetDisplay(Letter letter)
 {
-    if (letter == Letter::PLAY)
-    {
-        while(true)
-        {
-            for (int i = 0; i < 4; i++) {
-                PORTC = play[i];
-                PORTG = fnd_select[i];
-                _delay_us(2200);
-            }
-        }
-    }
+    if (letter == Letter::PLAY) currentScreen = play;
 }
 
 void FNDController::SetDisplay(int num)
 {
-    unsigned char fnd[4];
-    fnd[0] = (num / 1000) % 10;
-    fnd[1] = (num / 100) % 10;
-    fnd[2] = (num / 10) % 10;
-    fnd[3] = num % 10;
+    currentScreen[0] = (num / 1000) % 10;
+    currentScreen[1] = (num / 100) % 10;
+    currentScreen[2] = (num / 10) % 10;
+    currentScreen[3] = num % 10;
+}
 
-    for (int i = 0; i < 4; i++) 
-    {
-        PORTC = number[fnd[i]];
-        PORTG = fnd_select[i];
-        _delay_us(2200);
-    }
+void FNDController::SetAnimation(Animation animation, float speed)
+{
+    currentAnimation = animation;
+    animationSpeed = speed;
 }
 
 void FNDController::ShowDisplay()
 {
-    PORTC = play[currentDigit];     // 문자 출력
-    PORTG = fnd_select[currentDigit]; // 자리 선택 출력
 
-    // 다음 자리로 이동
-    currentDigit++;
-    if (currentDigit >= 4) {
-        currentDigit = 0; // 자리 순환
-    }
 }
 
-void FNDController::SetAnimation(Animations animation, float speed)
+void FNDController::Update()
 {
 
 }
 
-// Continuously show FND display 
-ISR(TIMER1_COMPA_vect) 
-{
-    //FNDController::Instance->ShowDisplay();
-}
+FNDController* FNDController::instance = nullptr;

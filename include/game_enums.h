@@ -13,7 +13,7 @@ namespace game_enums
         PLAY, _1ST, _2ND, _3RD, FAIL 
     };
 
-    enum class Animations
+    enum class Animation
     {
         NONE, FADE_IN_OUT, FLICKER
     };

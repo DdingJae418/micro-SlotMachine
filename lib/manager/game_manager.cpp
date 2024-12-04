@@ -5,13 +5,17 @@ void GameManager::AddGameState(State state, GameStatePtr statePtr)
     gameStateMap[state] = statePtr;
 }
 
-void GameManager::RunGame(State state)
+void GameManager::SetGameState(State state)
 {
-    // Set Starting state
+    if(currentState) currentState->EndState();
     currentState = gameStateMap[state];
-
-    // Start current State
     currentState->StartState();
+}
+
+void GameManager::Update()
+{
+    if (currentState)
+        currentState->UpdateState();
 }
 
 GameManager::~GameManager()

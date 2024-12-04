@@ -5,6 +5,6 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
-#include <ready_state.h>
+#include "ready_state.h"
 
 #endif
