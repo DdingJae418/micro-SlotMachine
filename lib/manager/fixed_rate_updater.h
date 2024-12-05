@@ -3,6 +3,8 @@
 
 #include <vector>
 
+class UpdateListener;
+
 class FixedRateUpdater
 {
 private:

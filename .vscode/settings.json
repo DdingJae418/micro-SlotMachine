@@ -3,7 +3,10 @@
         "iom128.h": "c",
         "vector": "cpp",
         "map": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "iomanip": "cpp",
+        "limits": "cpp",
+        "utility": "cpp"
     },
     "C_Cpp.default.compilerPath": "/Users/myoungjae/.platformio/packages/toolchain-atmelavr/bin/avr-gcc"
 }

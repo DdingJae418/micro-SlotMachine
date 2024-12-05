@@ -5,7 +5,7 @@ namespace game_enums
 {
     enum class State
     {
-        Ready, Opening, Playing, Stopping, Checking, Result
+        READY, OPENING, PLAYING, STOPPING, CHECKING, RESULT
     };
 
     enum class Letter
@@ -15,7 +15,7 @@ namespace game_enums
 
     enum class Animation
     {
-        NONE, FADE_IN_OUT, FLICKER
+        NONE, FADE, FLICKER
     };
 }
 

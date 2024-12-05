@@ -4,6 +4,7 @@
 #include <buzzer_controller.h>
 #include <switch_controller.h>
 #include <game_states/game_states.h>
+#include <fnd_animations/fnd_animations.h>
 
 int main(void)
 {
@@ -12,10 +13,14 @@ int main(void)
     GameManager gameManager;
     FNDController* fndController = FNDController::GetInstance();
     BuzzerController buzzerController;
-    SwitchController switchController;
+    //SwitchController switchController;
 
     // Add game states
-    gameManager.AddGameState(State::Ready, new ReadyState(&gameManager));
+    gameManager.AddGameState(State::READY, new ReadyState(&gameManager));
+
+    // Add animations
+    //fndController->AddAnimation(Animation::FADE, new FadeAnimation());
+    //fndController->AddAnimation(Animation::FLICKER, new FlickerAnimation());
 
     // Add update listeners
     updater->AddListener(fndController);
@@ -23,7 +28,7 @@ int main(void)
     updater->AddListener(&gameManager);
 
     // Start game with ready state
-    gameManager.SetGameState(State::Ready);
+    gameManager.SetGameState(State::READY);
 
     // Update modules every frame
     while(true) updater->CallListeners();
