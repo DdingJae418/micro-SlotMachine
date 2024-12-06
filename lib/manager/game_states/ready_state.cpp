@@ -3,7 +3,7 @@
 #include "game_states.h"
 
 const float ANIMATION_SPEED = 30;
-const float WAITING_TIME = 0.8;
+const float WAITING_TIME = 0.9;
 
 ReadyState::ReadyState(GameManager* gm, FNDController* fnd) 
     : gameManager(gm), fnd(fnd), time(0), phase(0)

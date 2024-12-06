@@ -12,8 +12,7 @@ int main(void)
     FixedRateUpdater* updater = FixedRateUpdater::GetInstance();
     GameManager gameManager;
     FNDController* fndController = FNDController::GetInstance();
-    BuzzerController buzzerController;
-    //SwitchController switchController;
+    BuzzerController* buzzerController = BuzzerController::GetInstance();
 
     // Add game states
     gameManager.AddGameState(State::READY, new ReadyState(&gameManager, fndController));
@@ -21,11 +20,10 @@ int main(void)
     // Add animations
     fndController->AddAnimation(Animation::NONE, new NoAnimation());
     fndController->AddAnimation(Animation::SWIPE, new SwipeAnimation());
-    //fndController->AddAnimation(Animation::FLICKER, new FlickerAnimation());
 
     // Add update listeners
     updater->AddListener(fndController);
-    updater->AddListener(&buzzerController);
+    updater->AddListener(buzzerController);
     updater->AddListener(&gameManager);
 
     // Start game with ready state
@@ -37,6 +35,7 @@ int main(void)
     // Delete modules
     delete updater;
     delete fndController;
+    delete buzzerController;
 
     return 0;
 }

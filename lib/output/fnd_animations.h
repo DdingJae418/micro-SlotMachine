@@ -16,8 +16,7 @@ private:
     int currentCol;
     float timeGap;
 public:
-    SwipeAnimation() : currentDigit(0), currentCol(0) {}
-    void StartAnimation(float speed) override;
+    void StartAnimation(float speed, int start, int end) override;
     void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 

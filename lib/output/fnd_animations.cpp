@@ -14,10 +14,12 @@ void NoAnimation::PlayAnimation(const vector<unsigned char>& original, vector<un
 
 /**** Swipe Animation *****/
 
-void SwipeAnimation::StartAnimation(float speed)
+void SwipeAnimation::StartAnimation(float speed, int start, int end)
 {
-    FNDAnimation::StartAnimation(speed);
-
+    FNDAnimation::StartAnimation(speed, start, end);
+    
+    currentDigit = startDigit;
+    currentCol = 0;
     timeGap = 1 / speed;
 }
 
@@ -57,11 +59,6 @@ void SwipeAnimation::PlayAnimation(const vector<unsigned char>& original, vector
         playTime = 0;
 
         // End animation
-        if(currentDigit >= 4)
-        {
-            currentDigit = 0;
-            currentCol = 0;
-            isAnimationPlaying = false;
-        }
+        if(currentDigit > endDigit) isAnimationPlaying = false;
     }
 }

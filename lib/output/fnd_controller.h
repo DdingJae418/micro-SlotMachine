@@ -29,7 +29,7 @@ public:
     void SetDisplay(Letter letter, bool consecutive = true);
     void SetDisplay(int num, bool consecutive = true);
     void AddAnimation(Animation Animation, FNDAnimation* fndAnimation);
-    void StartAnimation(Animation animation, float speed = 0);
+    void StartAnimation(Animation animation, float speed = 0, int start = 0, int end = 3);
     bool IsAnimationPlaying();
     void Update() override;
     ~FNDController();
@@ -41,11 +41,12 @@ class FNDAnimation
 protected:
     float speed;
     float playTime;
+    int startDigit, endDigit;
     bool isAnimationPlaying;
 public:
-    FNDAnimation() : speed(0), playTime(0), isAnimationPlaying(true) {}
+    FNDAnimation() : isAnimationPlaying(false) {}
     bool IsAnimationPlaying();
-    virtual void StartAnimation(float _speed);
+    virtual void StartAnimation(float spd, int start, int end);
     virtual void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) = 0;
     virtual ~FNDAnimation() {}
 };

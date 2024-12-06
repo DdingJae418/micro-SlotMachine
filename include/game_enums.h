@@ -17,6 +17,11 @@ namespace game_enums
     {
         NONE, SWIPE, FLICKER
     };
+
+    enum class Sound
+    {
+        READY_SONG
+    };
 }
 
 #endif
