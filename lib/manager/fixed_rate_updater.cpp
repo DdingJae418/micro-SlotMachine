@@ -64,11 +64,18 @@ void FixedRateUpdater::SetUpdateFlag()
 
 FixedRateUpdater* FixedRateUpdater::instance = nullptr;
 
+float Time::DeltaTime()
+{
+    static float frame = FixedRateUpdater::GetInstance()->GetFrameRate();
+    return 1 / frame;
+}
+
 
 /*** Timer Interrupt ***/
 
 ISR(TIMER1_COMPA_vect) 
 {
     // Set fixed update flag
-    FixedRateUpdater::GetInstance()->SetUpdateFlag();
+    static FixedRateUpdater* updater = FixedRateUpdater::GetInstance();
+    updater->SetUpdateFlag();
 }

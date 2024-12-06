@@ -10,12 +10,12 @@ namespace game_enums
 
     enum class Letter
     {
-        PLAY, _1ST, _2ND, _3RD, FAIL 
+        NONE, PLAY, _1ST, _2ND, _3RD, FAIL 
     };
 
     enum class Animation
     {
-        NONE, FADE, FLICKER
+        NONE, SWIPE, FLICKER
     };
 }
 

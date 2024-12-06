@@ -18,18 +18,20 @@ class FNDController : public UpdateListener
 {
 private:
     static FNDController* instance;
-    vector<unsigned char> displayOutput;
+    vector<unsigned char> originalDisplay;
+    vector<unsigned char> outputDisplay;
     map<Animation, FNDAnimation*> animationMap;
     FNDAnimation* currentAnimation;
-    FNDController() : displayOutput(4, 0), currentAnimation(nullptr) {}
+    FNDController() : originalDisplay(4, 0), outputDisplay(4, 0), currentAnimation(nullptr) {}
 public:
     static FNDController* GetInstance();
-    unsigned char GetDisplayDigit(int digit);
-    void SetDisplay(Letter letter);
-    void SetDisplay(int num);
+    unsigned char GetOutputDigit(int digit);
+    void SetDisplay(Letter letter, bool consecutive = true);
+    void SetDisplay(int num, bool consecutive = true);
     void AddAnimation(Animation Animation, FNDAnimation* fndAnimation);
-    void SetAnimation(Animation animation, float speed = 0);
-    virtual void Update();
+    void StartAnimation(Animation animation, float speed = 0);
+    bool IsAnimationPlaying();
+    void Update() override;
     ~FNDController();
 };
 
@@ -38,10 +40,13 @@ class FNDAnimation
 {
 protected:
     float speed;
+    float playTime;
+    bool isAnimationPlaying;
 public:
-    FNDAnimation() : speed(0) {}
-    void InitializeAnimation(float _speed);
-    virtual void PlayAnimation(vector<unsigned char>& display) = 0;
+    FNDAnimation() : speed(0), playTime(0), isAnimationPlaying(true) {}
+    bool IsAnimationPlaying();
+    virtual void StartAnimation(float _speed);
+    virtual void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) = 0;
     virtual ~FNDAnimation() {}
 };
 

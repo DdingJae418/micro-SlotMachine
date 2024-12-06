@@ -6,7 +6,7 @@
 class BuzzerController : public UpdateListener
 {
 public:
-    virtual void Update();
+    void Update() override;
 };
 
 

@@ -23,6 +23,12 @@ public:
     void SetUpdateFlag();
 };
 
+class Time
+{
+public:
+    static float DeltaTime();
+};
+
 class UpdateListener
 {
 public:

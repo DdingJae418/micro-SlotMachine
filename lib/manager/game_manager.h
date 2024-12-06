@@ -18,7 +18,7 @@ public:
     GameManager() : currentState(nullptr) {}
     void AddGameState(State state, GameStatePtr statePtr);
     void SetGameState(State state);
-    virtual void Update();
+    void Update() override;
     ~GameManager();
 };
 

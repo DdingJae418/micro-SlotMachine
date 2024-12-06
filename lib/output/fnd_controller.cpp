@@ -28,22 +28,42 @@ FNDController* FNDController::GetInstance()
     return instance;
 }
 
-unsigned char FNDController::GetDisplayDigit(int digit)
+unsigned char FNDController::GetOutputDigit(int digit)
 {
-    return displayOutput[digit];
+    return outputDisplay[digit];
 }
 
-void FNDController::SetDisplay(Letter letter)
+void FNDController::SetDisplay(Letter letter, bool consecutive)
 {
-    if (letter == Letter::PLAY) displayOutput = play;
+    // Set original display
+    switch (letter)
+    {
+    case Letter::NONE :
+        std::fill(originalDisplay.begin(), originalDisplay.end(), 0);
+        break;
+    case Letter::PLAY :
+        originalDisplay = play;
+        break;
+    default:
+        break;
+    }
+
+    // Empty output display
+    if (!consecutive)
+        std::fill(outputDisplay.begin(), outputDisplay.end(), 0);
 }
 
-void FNDController::SetDisplay(int num)
+void FNDController::SetDisplay(int num, bool consecutive)
 {
-    displayOutput[0] = number[(num / 1000) % 10];
-    displayOutput[1] = number[(num / 100) % 10];
-    displayOutput[2] = number[(num / 10) % 10];
-    displayOutput[3] = number[num % 10];
+    // Set original display
+    originalDisplay[0] = number[(num / 1000) % 10];
+    originalDisplay[1] = number[(num / 100) % 10];
+    originalDisplay[2] = number[(num / 10) % 10];
+    originalDisplay[3] = number[num % 10];
+
+    // Empty output display
+    if (!consecutive)
+        std::fill(outputDisplay.begin(), outputDisplay.end(), 0);
 }
 
 void FNDController::AddAnimation(Animation animation, FNDAnimation* fndAnimation)
@@ -51,21 +71,21 @@ void FNDController::AddAnimation(Animation animation, FNDAnimation* fndAnimation
     animationMap[animation] = fndAnimation;
 }
 
-void FNDController::SetAnimation(Animation animation, float speed)
+void FNDController::StartAnimation(Animation animation, float speed)
 {
-    if (animation == Animation::NONE)
-        currentAnimation = nullptr;
-    else
-    {
-        currentAnimation = animationMap[animation];
-        currentAnimation->InitializeAnimation(speed);
-    }
+    currentAnimation = animationMap[animation];
+    currentAnimation->StartAnimation(speed);
+}
+
+bool FNDController::IsAnimationPlaying()
+{
+    return currentAnimation && currentAnimation->IsAnimationPlaying();
 }
 
 void FNDController::Update()
 {
-    if(currentAnimation)
-        currentAnimation->PlayAnimation(displayOutput);
+    if(currentAnimation && currentAnimation->IsAnimationPlaying())
+        currentAnimation->PlayAnimation(originalDisplay, outputDisplay);
 }
 
 FNDController::~FNDController()
@@ -76,9 +96,16 @@ FNDController::~FNDController()
 
 FNDController* FNDController::instance = nullptr;
 
-void FNDAnimation::InitializeAnimation(float _speed)
+void FNDAnimation::StartAnimation(float _speed)
 {
     speed = _speed;
+    playTime = 0;
+    isAnimationPlaying = true;
+}
+
+bool FNDAnimation::IsAnimationPlaying()
+{
+    return isAnimationPlaying;
 }
 
 
@@ -88,7 +115,8 @@ unsigned char fnd_select[4] = {0x08, 0x04, 0x02, 0x01};
 volatile int currentDigit = 0;
 
 ISR(TIMER0_COMP_vect) {
-    PORTC = FNDController::GetInstance()->GetDisplayDigit(currentDigit);
+    static FNDController* fndController = FNDController::GetInstance();
+    PORTC = fndController->GetOutputDigit(currentDigit);
     PORTG = fnd_select[currentDigit];
     
     currentDigit++;

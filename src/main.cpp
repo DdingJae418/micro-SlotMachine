@@ -4,7 +4,7 @@
 #include <buzzer_controller.h>
 #include <switch_controller.h>
 #include <game_states/game_states.h>
-#include <fnd_animations/fnd_animations.h>
+#include <fnd_animations.h>
 
 int main(void)
 {
@@ -16,10 +16,11 @@ int main(void)
     //SwitchController switchController;
 
     // Add game states
-    gameManager.AddGameState(State::READY, new ReadyState(&gameManager));
+    gameManager.AddGameState(State::READY, new ReadyState(&gameManager, fndController));
 
     // Add animations
-    //fndController->AddAnimation(Animation::FADE, new FadeAnimation());
+    fndController->AddAnimation(Animation::NONE, new NoAnimation());
+    fndController->AddAnimation(Animation::SWIPE, new SwipeAnimation());
     //fndController->AddAnimation(Animation::FLICKER, new FlickerAnimation());
 
     // Add update listeners

@@ -7,11 +7,14 @@ class ReadyState : public GameState
 {
 private:
     GameManager* gameManager;
+    FNDController* fnd;
+    float time;
+    int phase;
 public:
-    ReadyState(GameManager* gm) : gameManager(gm) { }
-    virtual void StartState();
-    virtual void UpdateState();
-    virtual void EndState();
+    ReadyState(GameManager* gm, FNDController* fnd);
+    void StartState() override;
+    void UpdateState() override;
+    void EndState() override;
 };
 
 #endif
