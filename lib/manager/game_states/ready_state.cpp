@@ -1,19 +1,27 @@
 #include <fnd_controller.h>
+#include <buzzer_controller.h>
 #include <game_enums.h>
 #include "game_states.h"
 
 const float ANIMATION_SPEED = 30;
 const float WAITING_TIME = 0.9;
 
-ReadyState::ReadyState(GameManager* gm, FNDController* fnd) 
-    : gameManager(gm), fnd(fnd), time(0), phase(0)
+ReadyState::ReadyState(GameManager* gm, FNDController* fnd, BuzzerController* buzzer) 
+    : gameManager(gm), fnd(fnd), buzzer(buzzer)
 { }
 
 void ReadyState::StartState()
 {
+    // Set variables
+    time = 0;
+    phase = 0;
+
     // Empty FND display
     fnd->SetDisplay(Letter::NONE, false);
     fnd->StartAnimation(Animation::NONE);
+
+    // Play ready sound
+    buzzer->StartSound(&sounds::READY_SONG, 2.2, true);
 }
 
 void ReadyState::UpdateState()

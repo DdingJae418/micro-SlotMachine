@@ -8,10 +8,11 @@ class ReadyState : public GameState
 private:
     GameManager* gameManager;
     FNDController* fnd;
+    BuzzerController* buzzer;
     float time;
     int phase;
 public:
-    ReadyState(GameManager* gm, FNDController* fnd);
+    ReadyState(GameManager* gm, FNDController* fnd, BuzzerController* buzzer);
     void StartState() override;
     void UpdateState() override;
     void EndState() override;

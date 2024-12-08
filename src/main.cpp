@@ -15,7 +15,7 @@ int main(void)
     BuzzerController* buzzerController = BuzzerController::GetInstance();
 
     // Add game states
-    gameManager.AddGameState(State::READY, new ReadyState(&gameManager, fndController));
+    gameManager.AddGameState(State::READY, new ReadyState(&gameManager, fndController, buzzerController));
 
     // Add animations
     fndController->AddAnimation(Animation::NONE, new NoAnimation());
@@ -25,6 +25,9 @@ int main(void)
     updater->AddListener(fndController);
     updater->AddListener(buzzerController);
     updater->AddListener(&gameManager);
+
+    // Mute buzzer when testing at the cafe
+    //buzzerController->MuteBuzzer(true);
 
     // Start game with ready state
     gameManager.SetGameState(State::READY);

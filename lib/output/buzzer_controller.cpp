@@ -1,12 +1,10 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "buzzer_controller.h"
-#include "note_frequency.h"
-
 
 BuzzerController* BuzzerController::GetInstance()
 {
-    if(!instance)
+    if (!instance)
     {
         instance = new BuzzerController();
 
@@ -17,7 +15,53 @@ BuzzerController* BuzzerController::GetInstance()
     return instance;
 }
 
-void BuzzerController::PlayNote(uint16_t frequency)
+void BuzzerController::StartSound(const BuzzerSound* sound, float speed, bool loop)
+{
+    if(isMute) return;
+
+    currentSound = sound;
+    playSpeed = speed;
+    loopSound = loop;
+    playTime = 0;
+
+    // Play first note
+    if (currentSound) 
+    {
+        currentNote = currentSound->begin();
+        PlayNote(currentNote->first);
+    }
+}
+
+void BuzzerController::Update()
+{
+    if (!currentSound) return;
+
+    playTime += playSpeed * Time::DeltaTime();
+    if (playTime >= currentNote->second)
+    {
+        currentNote++;
+
+        if (currentNote == currentSound->end()) 
+        // Playing complete
+        {
+            if (loopSound) 
+                StartSound(currentSound, playSpeed, true);
+            else 
+            {
+                currentSound = nullptr;
+                PlayNote(NOTE_REST);
+            }
+        }
+        else
+        // Play next note
+        {
+            PlayNote(currentNote->first);
+            playTime = 0;
+        }
+    }
+}
+
+void BuzzerController::PlayNote(double frequency)
 {
     // Stop buzzer
     if (frequency == 0) 
@@ -28,19 +72,20 @@ void BuzzerController::PlayNote(uint16_t frequency)
         return;
     }
 
-    // Activate timer2
-    OCR2 = (F_CPU / (2 * 64 * frequency)) - 1;
-    TCCR2 = (1 << WGM01) | (1 << CS01) | (1 << CS00);
-    TIMSK |= (1 << OCIE2);                            
+    // Activate timer2 with 256 prescaler
+    OCR2 = static_cast<uint8_t>((F_CPU / (256.0 * frequency)) - 1);
+    TCCR2 = (1 << WGM21) | (1 << CS22);                            
+    TIMSK |= (1 << OCIE2);                        
 }
 
-void BuzzerController::Update()
+bool BuzzerController::IsSoundPlaying()
 {
-    playTime += Time::DeltaTime();
-    if (playTime < 3)
-        PlayNote(NOTE_A2);
-    else
-        PlayNote(NOTE_REST);
+    return currentSound;
+}
+
+void BuzzerController::MuteBuzzer(bool value)
+{
+    isMute = value;
 }
 
 BuzzerController* BuzzerController::instance = nullptr;
