@@ -11,7 +11,6 @@ using game_enums::Sound;
 class BuzzerController : public UpdateListener
 {
 private:
-    static BuzzerController* instance;
     const BuzzerSound* currentSound;
     NoteIter currentNote;
     float playSpeed;
@@ -19,10 +18,13 @@ private:
     float playTime;
     bool isMute;
 private:
-    BuzzerController() : currentSound(nullptr), currentNote(nullptr), isMute(false) {};
+    BuzzerController();
+    ~BuzzerController() = default;
+    BuzzerController(const BuzzerController&) = delete;
+    BuzzerController& operator=(const BuzzerController&) = delete;
     void PlayNote(double frequency);
 public:
-    static BuzzerController* GetInstance();
+    static BuzzerController& GetInstance();
     void StartSound(const BuzzerSound* sound, float speed = 1, bool loop = false);
     void Update() override;
     bool IsSoundPlaying();

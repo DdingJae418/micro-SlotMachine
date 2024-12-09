@@ -22,6 +22,11 @@ namespace game_enums
     {
         READY_SONG
     };
+
+    enum class Switch
+    {
+        ONE, TWO
+    };
 }
 
 #endif

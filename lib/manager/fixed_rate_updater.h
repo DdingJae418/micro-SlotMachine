@@ -8,14 +8,16 @@ class UpdateListener;
 class FixedRateUpdater
 {
 private:
-    static FixedRateUpdater* instance; 
     std::vector<UpdateListener*> listeners;
     int frameRate;
     volatile bool updateFlag;
-    FixedRateUpdater() : frameRate(60), updateFlag(false) {}
+private:
+    FixedRateUpdater();
+    ~FixedRateUpdater() = default;
+    FixedRateUpdater(const FixedRateUpdater&) = delete;
+    FixedRateUpdater& operator= (const FixedRateUpdater&) = delete;
 public:
-    static FixedRateUpdater* GetInstance();
-    ~FixedRateUpdater();
+    static FixedRateUpdater& GetInstance();
     void AddListener(UpdateListener* listener);
     void CallListeners();
     void SetFrameRate(int rate);

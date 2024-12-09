@@ -4,25 +4,20 @@
 
 /*** Define Fixed Rate Updater ***/
 
-FixedRateUpdater* FixedRateUpdater::GetInstance()
+FixedRateUpdater::FixedRateUpdater() : frameRate(60), updateFlag(false)
 {
-    if(!instance)
-    {
-        instance = new FixedRateUpdater();
-
-        // Initialize timer1 for fixed update
-        TCCR1A = 0;
-        TCCR1B = (1 << WGM12) | (1 << CS12);
-        OCR1A = 1040; // 60fps
-        TIMSK = (1 << OCIE1A);
-        sei(); 
-    }
-    return instance;
+    // Initialize timer1 for fixed update
+    TCCR1A = 0;
+    TCCR1B = (1 << WGM12) | (1 << CS12);
+    OCR1A = 1040; // 60fps
+    TIMSK = (1 << OCIE1A);
+    sei(); 
 }
 
-FixedRateUpdater::~FixedRateUpdater()
+FixedRateUpdater& FixedRateUpdater::GetInstance()
 {
-    delete instance;
+    static FixedRateUpdater instance;
+    return instance;
 }
 
 void FixedRateUpdater::AddListener(UpdateListener* listener)
@@ -62,11 +57,9 @@ void FixedRateUpdater::SetUpdateFlag()
     updateFlag = true;
 }
 
-FixedRateUpdater* FixedRateUpdater::instance = nullptr;
-
 float Time::DeltaTime()
 {
-    static float frame = FixedRateUpdater::GetInstance()->GetFrameRate();
+    static float frame = FixedRateUpdater::GetInstance().GetFrameRate();
     return 1 / frame;
 }
 
@@ -76,6 +69,6 @@ float Time::DeltaTime()
 ISR(TIMER1_COMPA_vect) 
 {
     // Set fixed update flag
-    static FixedRateUpdater* updater = FixedRateUpdater::GetInstance();
-    updater->SetUpdateFlag();
+    static FixedRateUpdater& updater = FixedRateUpdater::GetInstance();
+    updater.SetUpdateFlag();
 }

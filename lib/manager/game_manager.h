@@ -4,7 +4,9 @@
 #include <map>
 #include <fixed_rate_updater.h>
 #include <game_enums.h>
+
 using game_enums::State;
+using game_enums::Switch;
 
 class GameState;
 typedef GameState* GameStatePtr;
@@ -13,13 +15,18 @@ class GameManager : public UpdateListener
 {
 private:
     std::map<State, GameStatePtr> gameStateMap;
-    GameStatePtr currentState;
-public:
+    GameState* currentState;
+private:
     GameManager() : currentState(nullptr) {}
+    ~GameManager();
+    GameManager(const GameManager&) = delete;
+    GameManager& operator=(const GameManager&) = delete;
+public:
+    static GameManager& GetInstance();
     void AddGameState(State state, GameStatePtr statePtr);
     void SetGameState(State state);
+    void SwitchClick(Switch sw);
     void Update() override;
-    ~GameManager();
 };
 
 class GameState
@@ -28,6 +35,8 @@ public:
     virtual void StartState() = 0;
     virtual void UpdateState() = 0;
     virtual void EndState() = 0;
+    virtual void SwitchOne() = 0;
+    virtual void SwitchTwo() = 0;
     virtual ~GameState() {};
 };
 

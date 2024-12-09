@@ -2,16 +2,17 @@
 #include <util/delay.h>
 #include "buzzer_controller.h"
 
-BuzzerController* BuzzerController::GetInstance()
+BuzzerController::BuzzerController() 
+    : currentSound(nullptr), currentNote(nullptr), isMute(false)
 {
-    if (!instance)
-    {
-        instance = new BuzzerController();
+    // Set buzzer pin
+    DDRB |= (1 << PB4);
+    sei();
+}
 
-        // Set buzzer pin
-        DDRB |= (1 << PB4);
-        sei();
-    }
+BuzzerController& BuzzerController::GetInstance()
+{
+    static BuzzerController instance;
     return instance;
 }
 
@@ -87,9 +88,6 @@ void BuzzerController::MuteBuzzer(bool value)
 {
     isMute = value;
 }
-
-BuzzerController* BuzzerController::instance = nullptr;
-
 
 // Play buzzer with timer2 interrupt
 ISR(TIMER2_COMP_vect) 

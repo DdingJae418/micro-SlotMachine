@@ -6,39 +6,52 @@
 #include <game_states/game_states.h>
 #include <fnd_animations.h>
 
+void AddGameStates();
+void AddAnimations();
+void AddUpdateListeners();
+
 int main(void)
 {
-    // Create modules
-    FixedRateUpdater* updater = FixedRateUpdater::GetInstance();
-    GameManager gameManager;
-    FNDController* fndController = FNDController::GetInstance();
-    BuzzerController* buzzerController = BuzzerController::GetInstance();
+    // Initial settings
+    AddGameStates();
+    AddAnimations();
+    AddUpdateListeners();
 
-    // Add game states
-    gameManager.AddGameState(State::READY, new ReadyState(&gameManager, fndController, buzzerController));
-
-    // Add animations
-    fndController->AddAnimation(Animation::NONE, new NoAnimation());
-    fndController->AddAnimation(Animation::SWIPE, new SwipeAnimation());
-
-    // Add update listeners
-    updater->AddListener(fndController);
-    updater->AddListener(buzzerController);
-    updater->AddListener(&gameManager);
-
-    // Mute buzzer when testing at the cafe
-    //buzzerController->MuteBuzzer(true);
+    // Mute buzzer when testing
+    //BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
-    gameManager.SetGameState(State::READY);
+    GameManager::GetInstance().SetGameState(State::READY);
 
     // Update modules every frame
-    while(true) updater->CallListeners();
-
-    // Delete modules
-    delete updater;
-    delete fndController;
-    delete buzzerController;
+    while(true) FixedRateUpdater::GetInstance().CallListeners();
 
     return 0;
+}
+
+void AddGameStates()
+{
+    GameManager& gm = GameManager::GetInstance();
+    FNDController& fnd = FNDController::GetInstance();
+    BuzzerController& buzzer = BuzzerController::GetInstance();
+
+    gm.AddGameState(State::READY, new ReadyState(gm, fnd, buzzer));
+}
+
+void AddAnimations()
+{
+    FNDController& fnd = FNDController::GetInstance();
+
+    fnd.AddAnimation(Animation::NONE, new NoAnimation());
+    fnd.AddAnimation(Animation::SWIPE, new SwipeAnimation());
+}
+
+void AddUpdateListeners()
+{
+    FixedRateUpdater& updater = FixedRateUpdater::GetInstance();
+
+    updater.AddListener(&FNDController::GetInstance());
+    updater.AddListener(&BuzzerController::GetInstance());
+    updater.AddListener(&SwitchController::GetInstance());
+    updater.AddListener(&GameManager::GetInstance());
 }

@@ -17,14 +17,17 @@ class FNDAnimation;
 class FNDController : public UpdateListener
 {
 private:
-    static FNDController* instance;
     vector<unsigned char> originalDisplay;
     vector<unsigned char> outputDisplay;
     map<Animation, FNDAnimation*> animationMap;
     FNDAnimation* currentAnimation;
-    FNDController() : originalDisplay(4, 0), outputDisplay(4, 0), currentAnimation(nullptr) {}
+private:
+    FNDController();
+    ~FNDController();
+    FNDController(const FNDController&) = delete;
+    FNDController& operator=(const FNDController&) = delete;
 public:
-    static FNDController* GetInstance();
+    static FNDController& GetInstance();
     unsigned char GetOutputDigit(int digit);
     void SetDisplay(Letter letter, bool consecutive = true);
     void SetDisplay(int num, bool consecutive = true);
@@ -32,7 +35,6 @@ public:
     void StartAnimation(Animation animation, float speed = 0, int start = 0, int end = 3);
     bool IsAnimationPlaying();
     void Update() override;
-    ~FNDController();
 };
 
 

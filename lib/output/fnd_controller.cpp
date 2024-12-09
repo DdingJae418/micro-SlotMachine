@@ -8,23 +8,24 @@ const vector<unsigned char> number = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 
 const vector<unsigned char> play = {0x73, 0x38, 0x77, 0x6E};
 
 
-FNDController* FNDController::GetInstance()
+FNDController::FNDController()
+    : originalDisplay(4, 0), outputDisplay(4, 0), currentAnimation(nullptr)
 {
-    if(!instance)
-    {
-        instance = new FNDController();
-        
-        // Set FND pin
-        DDRC = 0xFF;
-        DDRG = 0x0F;
+    // Set FND pin
+    DDRC = 0xFF;
+    DDRG = 0x0F;
 
-        // Set timer0 for FND
-        TCCR0 = (1 << WGM01) | (1 << CS02);
-        OCR0 = 124; // 2ms
-        TIMSK |= (1 << OCIE0);
+    // Set timer0 for FND
+    TCCR0 = (1 << WGM01) | (1 << CS02);
+    OCR0 = 124; // 2ms
+    TIMSK |= (1 << OCIE0);
 
-        sei(); 
-    }
+    sei(); 
+}
+
+FNDController& FNDController::GetInstance()
+{
+    static FNDController instance;
     return instance;
 }
 
@@ -94,8 +95,6 @@ FNDController::~FNDController()
         delete a.second;
 }
 
-FNDController* FNDController::instance = nullptr;
-
 void FNDAnimation::StartAnimation(float spd, int start, int end)
 {
     speed = spd;
@@ -118,8 +117,9 @@ volatile int currentDigit = 0;
 
 ISR(TIMER0_COMP_vect) 
 {
-    static FNDController* fndController = FNDController::GetInstance();
-    PORTC = fndController->GetOutputDigit(currentDigit);
+    static FNDController& fndController = FNDController::GetInstance();
+    
+    PORTC = fndController.GetOutputDigit(currentDigit);
     PORTG = fnd_select[currentDigit];
     
     currentDigit++;

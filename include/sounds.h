@@ -17,7 +17,8 @@ namespace sounds
         {NOTE_D6, 4}, {NOTE_REST, 1}, {NOTE_A5, 1}, {NOTE_E6, 1.5}, {NOTE_D6, 0.45}, 
         {NOTE_REST, 0.05}, {NOTE_D6, 2.9}, {NOTE_REST, 0.1}, {NOTE_B5, 1}, {NOTE_A5, 1}, 
         {NOTE_B5, 1}, {NOTE_FS5, 0.2}, {NOTE_E5, 1.3}, {NOTE_D5, 0.45}, {NOTE_REST, 0.05},  
-        {NOTE_D5, 2}, {NOTE_B4, 1.5}, {NOTE_D5, 0.5}, {NOTE_FS5, 2}, {NOTE_G5, 2}       
+        {NOTE_D5, 2}, {NOTE_B4, 1.5}, {NOTE_D5, 0.5}, {NOTE_FS5, 2}, {NOTE_G5, 1.9},
+        {NOTE_REST, 0.1}
     };
 }
 
