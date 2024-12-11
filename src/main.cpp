@@ -19,7 +19,7 @@ int main(void)
     AddUpdateListeners();
 
     // Mute buzzer when testing
-    //BuzzerController::GetInstance().MuteBuzzer(true);
+    BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
     GameManager::GetInstance().SetGameState(State::READY);

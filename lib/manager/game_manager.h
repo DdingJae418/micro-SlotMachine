@@ -42,13 +42,5 @@ public:
     virtual ~GameState() {};
 };
 
-class ReelManager {
-public:
-    static const float REEL_DELAY[4];
-    static float reelTime[4];
-    static int reels[4];
-    static int stoppedReel;
-};
-
 
 #endif

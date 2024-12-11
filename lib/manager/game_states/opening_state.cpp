@@ -12,7 +12,7 @@ const float WAITING_TIME = 2.5;
 const float FIRST_ANIMATION_SPEED = 8;
 const float SECOND_ANIMATION_SPEED = 4;
 const float START_SOUND_SPEED = 5;
-const float START_PLAYING_SOUND_SPEED = 5;
+const float START_PLAYING_SOUND_SPEED = 6;
 const float REEL_SOUND_SPEED = 8;
 
 
@@ -81,7 +81,7 @@ void OpeningState::HandleSecondPhase()
 void OpeningState::HandleThirdPhase()
 {
     for (int i = 0; i <= availableReel; i++)
-        ReelManager::reelTime[i] += Time::DeltaTime();
+        reelTime[i] += Time::DeltaTime();
     time += Time::DeltaTime();
 
     if (time > WAITING_TIME)
@@ -103,10 +103,10 @@ void OpeningState::HandleThirdPhase()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (ReelManager::reelTime[i] > ReelManager::REEL_DELAY[i])
+        if (reelTime[i] > REEL_DELAY[i])
         {
-            ReelManager::reelTime[i] = 0;
-            ReelManager::reels[i] = (ReelManager::reels[i] + 1) % 10;
+            reelTime[i] = 0;
+            reels[i] = (reels[i] + 1) % 10;
             changedReel = i;
             if (i == availableReel) recentReel = i;
         }
@@ -115,8 +115,7 @@ void OpeningState::HandleThirdPhase()
     // Show reel numbers and play reel sound
     if(changedReel > -1)
     {
-        int num = ReelManager::reels[0] * 1000 + ReelManager::reels[1] * 100 + 
-            ReelManager::reels[2] * 10 + ReelManager::reels[3];
+        int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
         fnd.StartAnimation(Animation::NONE, 1, 0, recentReel);
         if (changedReel == recentReel) buzzer.StartSound(&sounds::REEL_SOUND, REEL_SOUND_SPEED);
@@ -131,17 +130,17 @@ void OpeningState::HandleFourthPhase()
 
     // Rotate reels while playing flickering animation
     for (int i = 0; i < 4; i++)
-        ReelManager::reelTime[i] += Time::DeltaTime();
+        reelTime[i] += Time::DeltaTime();
 
     bool reelChanged = false;
 
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (ReelManager::reelTime[i] > ReelManager::REEL_DELAY[i])
+        if (reelTime[i] > REEL_DELAY[i])
         {
-            ReelManager::reelTime[i] = 0;
-            ReelManager::reels[i] = (ReelManager::reels[i] + 1) % 10;
+            reelTime[i] = 0;
+            reels[i] = (reels[i] + 1) % 10;
             reelChanged = true;
         }
     }
@@ -149,8 +148,7 @@ void OpeningState::HandleFourthPhase()
     // Show reel numbers
     if(reelChanged)
     {
-        int num = ReelManager::reels[0] * 1000 + ReelManager::reels[1] * 100 + 
-            ReelManager::reels[2] * 10 + ReelManager::reels[3];
+        int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
     }
 }

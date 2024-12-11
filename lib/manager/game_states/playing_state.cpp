@@ -13,22 +13,25 @@ void PlayingState::StartState()
     // Set variables
     time = 0;
     phase = 0;
+
+    // Start playing song
+    buzzer.StartSound(&sounds::PLAYING_SONG, 5, true);
 }
 
 void PlayingState::UpdateState()
 {   
-    for (int i = ReelManager::stoppedReel + 1; i < 4; i++)
-        ReelManager::reelTime[i] += Time::DeltaTime();
+    for (int i = stoppedReel + 1; i < 4; i++)
+        reelTime[i] += Time::DeltaTime();
 
     bool reelChanged = false;
 
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (ReelManager::reelTime[i] > ReelManager::REEL_DELAY[i])
+        if (reelTime[i] > REEL_DELAY[i])
         {
-            ReelManager::reelTime[i] = 0;
-            ReelManager::reels[i] = (ReelManager::reels[i] + 1) % 10;
+            reelTime[i] = 0;
+            reels[i] = (reels[i] + 1) % 10;
             reelChanged = true;
         }
     }
@@ -36,8 +39,8 @@ void PlayingState::UpdateState()
     // Show reel numbers
     if(reelChanged)
     {
-        int num = ReelManager::reels[0] * 1000 + ReelManager::reels[1] * 100 + 
-            ReelManager::reels[2] * 10 + ReelManager::reels[3];
+        int num = reels[0] * 1000 + reels[1] * 100 + 
+            reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
         fnd.StartAnimation(Animation::NONE);
     }

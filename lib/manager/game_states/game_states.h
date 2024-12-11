@@ -3,6 +3,13 @@
 
 #include "game_manager.h"
 
+// Reel variables
+inline const float REEL_DELAY[4] = {0.6, 0.4, 0.3, 0.2};
+inline float reelTime[4] = {0,0,0,0};
+inline int reels[4] = {0,0,0,0};
+inline int stoppedReel = -1;
+
+
 class ReadyState : public GameState
 {
 private:

@@ -43,8 +43,3 @@ GameManager::~GameManager()
 }
 
 GameManager* GameManager::instance = nullptr;
-
-const float ReelManager::REEL_DELAY[4] = {0.6, 0.4, 0.3, 0.2};
-float ReelManager::reelTime[4] = {0,0,0,0};
-int ReelManager::reels[4] = {0,0,0,0};
-int ReelManager::stoppedReel = -1;
