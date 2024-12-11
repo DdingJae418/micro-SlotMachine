@@ -16,8 +16,14 @@ FixedRateUpdater::FixedRateUpdater() : frameRate(60), updateFlag(false)
 
 FixedRateUpdater& FixedRateUpdater::GetInstance()
 {
-    static FixedRateUpdater instance;
-    return instance;
+    if(!instance) instance = new FixedRateUpdater();
+    return *instance;
+}
+
+void FixedRateUpdater::DestroyInstance()
+{
+    delete instance;
+    instance = nullptr;
 }
 
 void FixedRateUpdater::AddListener(UpdateListener* listener)
@@ -56,6 +62,8 @@ void FixedRateUpdater::SetUpdateFlag()
 {
     updateFlag = true;
 }
+
+FixedRateUpdater* FixedRateUpdater::instance = nullptr;
 
 float Time::DeltaTime()
 {

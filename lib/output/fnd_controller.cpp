@@ -25,8 +25,14 @@ FNDController::FNDController()
 
 FNDController& FNDController::GetInstance()
 {
-    static FNDController instance;
-    return instance;
+    if (!instance) instance = new FNDController();
+    return *instance;
+}
+
+void FNDController::DestroyInstance()
+{
+    delete instance;
+    instance = nullptr;
 }
 
 unsigned char FNDController::GetOutputDigit(int digit)
@@ -94,6 +100,8 @@ FNDController::~FNDController()
     for (auto a : animationMap)
         delete a.second;
 }
+
+FNDController* FNDController::instance = nullptr;
 
 void FNDAnimation::StartAnimation(float spd, int start, int end)
 {

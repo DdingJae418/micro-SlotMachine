@@ -12,8 +12,14 @@ BuzzerController::BuzzerController()
 
 BuzzerController& BuzzerController::GetInstance()
 {
-    static BuzzerController instance;
-    return instance;
+    if (!instance) instance = new BuzzerController();
+    return *instance;
+}
+
+void BuzzerController::DestroyInstance()
+{
+    delete instance;
+    instance = nullptr;
 }
 
 void BuzzerController::StartSound(const BuzzerSound* sound, float speed, bool loop)
@@ -88,6 +94,9 @@ void BuzzerController::MuteBuzzer(bool value)
 {
     isMute = value;
 }
+
+BuzzerController* BuzzerController::instance = nullptr;
+
 
 // Play buzzer with timer2 interrupt
 ISR(TIMER2_COMP_vect) 

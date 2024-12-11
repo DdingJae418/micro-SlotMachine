@@ -8,6 +8,7 @@ using game_enums::Switch;
 class SwitchController : public UpdateListener
 {
 private:
+    static SwitchController* instance;
     volatile bool isSwitchOneClicked;
     volatile bool isSwitchTwoClicked;
 private:
@@ -17,6 +18,7 @@ private:
     SwitchController& operator= (const SwitchController&) = delete;
 public:
     static SwitchController& GetInstance();
+    static void DestroyInstance();
     void OnSwitchClick(Switch sw);
     void Update() override;
 };

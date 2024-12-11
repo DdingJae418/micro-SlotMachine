@@ -9,6 +9,7 @@
 void AddGameStates();
 void AddAnimations();
 void AddUpdateListeners();
+void DestroySingleTones();
 
 int main(void)
 {
@@ -25,6 +26,9 @@ int main(void)
 
     // Update modules every frame
     while(true) FixedRateUpdater::GetInstance().CallListeners();
+
+    // Destory all single tone objects
+    DestroySingleTones();
 
     return 0;
 }
@@ -54,4 +58,13 @@ void AddUpdateListeners()
     updater.AddListener(&BuzzerController::GetInstance());
     updater.AddListener(&SwitchController::GetInstance());
     updater.AddListener(&GameManager::GetInstance());
+}
+
+void DestroySingleTones()
+{
+    FixedRateUpdater::DestroyInstance();
+    SwitchController::DestroyInstance();
+    GameManager::DestroyInstance();
+    BuzzerController::DestroyInstance();
+    FNDController::DestroyInstance();
 }

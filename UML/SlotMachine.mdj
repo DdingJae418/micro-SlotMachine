@@ -4090,11 +4090,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGTj2pDqrC4Nik="
 											},
-											"visible": false,
 											"font": "Arial;13;0",
-											"left": 192,
-											"top": -80,
-											"height": 13
+											"left": 677,
+											"top": 301,
+											"width": 108.630859375,
+											"height": 13,
+											"text": "«interface»"
 										},
 										{
 											"_type": "LabelView",
@@ -4104,7 +4105,7 @@
 											},
 											"font": "Arial;13;3",
 											"left": 677,
-											"top": 303,
+											"top": 316,
 											"width": 108.630859375,
 											"height": 13,
 											"text": "UpdateListener"
@@ -4141,7 +4142,7 @@
 									"left": 672,
 									"top": 296,
 									"width": 118.630859375,
-									"height": 25,
+									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGTj2pDq7C5pAk="
 									},
@@ -5925,6 +5926,7 @@
 						"$ref": "AAAAAAFFxl6EZT9Ufwg="
 					},
 					"name": "UpdateListener",
+					"stereotype": "interface",
 					"isAbstract": true
 				},
 				{

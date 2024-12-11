@@ -14,6 +14,7 @@ typedef GameState* GameStatePtr;
 class GameManager : public UpdateListener
 {
 private:
+    static GameManager* instance;
     std::map<State, GameStatePtr> gameStateMap;
     GameState* currentState;
 private:
@@ -23,6 +24,7 @@ private:
     GameManager& operator=(const GameManager&) = delete;
 public:
     static GameManager& GetInstance();
+    static void DestroyInstance();
     void AddGameState(State state, GameStatePtr statePtr);
     void SetGameState(State state);
     void SwitchClick(Switch sw);

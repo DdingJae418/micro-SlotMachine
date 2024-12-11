@@ -14,8 +14,14 @@ SwitchController::SwitchController() : isSwitchOneClicked(false), isSwitchTwoCli
 
 SwitchController& SwitchController::GetInstance()
 {
-    static SwitchController instance;
-    return instance;
+    if (!instance) instance = new SwitchController();
+    return *instance;
+}
+
+void SwitchController::DestroyInstance()
+{
+    delete instance;
+    instance = nullptr;
 }
 
 
@@ -47,6 +53,8 @@ void SwitchController::Update()
         isSwitchTwoClicked = false;
     }
 }
+
+SwitchController* SwitchController::instance = nullptr;
 
 
 

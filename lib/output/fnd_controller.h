@@ -17,6 +17,7 @@ class FNDAnimation;
 class FNDController : public UpdateListener
 {
 private:
+    static FNDController* instance;
     vector<unsigned char> originalDisplay;
     vector<unsigned char> outputDisplay;
     map<Animation, FNDAnimation*> animationMap;
@@ -28,6 +29,7 @@ private:
     FNDController& operator=(const FNDController&) = delete;
 public:
     static FNDController& GetInstance();
+    static void DestroyInstance();
     unsigned char GetOutputDigit(int digit);
     void SetDisplay(Letter letter, bool consecutive = true);
     void SetDisplay(int num, bool consecutive = true);

@@ -2,8 +2,14 @@
 
 GameManager& GameManager::GetInstance()
 {
-    static GameManager instance;
-    return instance;
+    if (!instance) instance = new GameManager();
+    return *instance;
+}
+
+void GameManager::DestroyInstance()
+{
+    delete instance;
+    instance = nullptr;
 }
 
 void GameManager::AddGameState(State state, GameStatePtr statePtr)
@@ -35,3 +41,5 @@ GameManager::~GameManager()
     for (auto state : gameStateMap)
         delete state.second;
 }
+
+GameManager* GameManager::instance = nullptr;
