@@ -57,8 +57,6 @@ private:
     GameManager& gm;
     FNDController& fnd;
     BuzzerController& buzzer;
-    float time;
-    int phase;
 public:
     PlayingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -78,6 +76,23 @@ private:
     int phase;
 public:
     ResettingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
+    void StartState() override;
+    void UpdateState() override;
+    void EndState() override;
+    void SwitchOne() override;
+    void SwitchTwo() override;
+};
+
+class StoppingState : public GameState
+{
+private:
+    GameManager& gm;
+    FNDController& fnd;
+    BuzzerController& buzzer;
+    float time;
+    int phase;
+public:
+    StoppingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
     void UpdateState() override;
     void EndState() override;

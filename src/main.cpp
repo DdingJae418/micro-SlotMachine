@@ -19,7 +19,7 @@ int main(void)
     AddUpdateListeners();
 
     // Mute buzzer when testing
-    BuzzerController::GetInstance().MuteBuzzer(true);
+    //BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
     GameManager::GetInstance().SetGameState(State::READY);
@@ -43,6 +43,8 @@ void AddGameStates()
     gm.AddGameState(State::READY, new ReadyState(gm, fnd, buzzer));
     gm.AddGameState(State::OPENING, new OpeningState(gm, fnd, buzzer));
     gm.AddGameState(State::PLAYING, new PlayingState(gm, fnd, buzzer));
+    gm.AddGameState(State::RESETTING, new ResettingState(gm, fnd, buzzer));
+    gm.AddGameState(State::STOPPING, new StoppingState(gm, fnd, buzzer));
 }
 
 void AddAnimations()

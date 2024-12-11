@@ -10,10 +10,6 @@ PlayingState::PlayingState(GameManager& gm, FNDController& fnd, BuzzerController
 
 void PlayingState::StartState()
 {
-    // Set variables
-    time = 0;
-    phase = 0;
-
     // Start playing song
     buzzer.StartSound(&sounds::PLAYING_SONG, 5, true);
 }
@@ -46,7 +42,16 @@ void PlayingState::UpdateState()
     }
 }
 
+void PlayingState::SwitchOne() 
+{ 
+    // Stop reel
+    gm.SetGameState(State::STOPPING);
+}
 
-void PlayingState::SwitchOne() { }
+void PlayingState::SwitchTwo() 
+{ 
+    // Reset game
+    gm.SetGameState(State::RESETTING);
+}
+
 void PlayingState::EndState() { }
-void PlayingState::SwitchTwo() { }
