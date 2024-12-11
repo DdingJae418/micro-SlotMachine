@@ -10,7 +10,7 @@ FixedRateUpdater::FixedRateUpdater() : frameRate(60), updateFlag(false)
     TCCR1A = 0;
     TCCR1B = (1 << WGM12) | (1 << CS12);
     OCR1A = 1040; // 60fps
-    TIMSK = (1 << OCIE1A);
+    TIMSK |= (1 << OCIE1A);
     sei(); 
 }
 

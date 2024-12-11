@@ -12,20 +12,21 @@ void AddUpdateListeners();
 void DestroySingleTones();
 
 int main(void)
-{
+{   
     // Initial settings
     AddGameStates();
     AddAnimations();
     AddUpdateListeners();
 
     // Mute buzzer when testing
-    //BuzzerController::GetInstance().MuteBuzzer(true);
+    BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
     GameManager::GetInstance().SetGameState(State::READY);
 
     // Update modules every frame
-    while(true) FixedRateUpdater::GetInstance().CallListeners();
+    FixedRateUpdater& updater = FixedRateUpdater::GetInstance();
+    while(true) updater.CallListeners();
 
     // Destory all single tone objects
     DestroySingleTones();

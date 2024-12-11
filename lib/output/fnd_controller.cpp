@@ -19,8 +19,6 @@ FNDController::FNDController()
     TCCR0 = (1 << WGM01) | (1 << CS02);
     OCR0 = 124; // 2ms
     TIMSK |= (1 << OCIE0);
-
-    sei(); 
 }
 
 FNDController& FNDController::GetInstance()

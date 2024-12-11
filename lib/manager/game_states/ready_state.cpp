@@ -27,9 +27,9 @@ void ReadyState::StartState()
 
 void ReadyState::UpdateState()
 {
-    if(fnd.IsAnimationPlaying()) return;
+    if (fnd.IsAnimationPlaying()) return;
     
-    if(phase == 0)
+    if (phase == 0)
     {
         // Set 'PLAY' letter and start 'SWIPE' animation at the FND display
         fnd.SetDisplay(Letter::PLAY);
