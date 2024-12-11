@@ -34,7 +34,7 @@ public:
     void SetDisplay(Letter letter, bool consecutive = true);
     void SetDisplay(int num, bool consecutive = true);
     void AddAnimation(Animation Animation, FNDAnimation* fndAnimation);
-    void StartAnimation(Animation animation, float speed = 0, int start = 0, int end = 3);
+    void StartAnimation(Animation animation, float speed = 1, int start = 0, int end = 3);
     bool IsAnimationPlaying();
     void Update() override;
 };

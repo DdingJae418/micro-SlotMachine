@@ -52,17 +52,11 @@ void ReadyState::UpdateState()
     }
 }
 
-void ReadyState::EndState()
-{
-
-}
-
 void ReadyState::SwitchOne()
 {
-
+    // Change to opening state
+    gm.SetGameState(State::OPENING);
 }
 
-void ReadyState::SwitchTwo()
-{
-    
-}
+void ReadyState::EndState() { }
+void ReadyState::SwitchTwo() { }

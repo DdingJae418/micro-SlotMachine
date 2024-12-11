@@ -20,6 +20,18 @@ namespace sounds
         {NOTE_D5, 2}, {NOTE_B4, 1.5}, {NOTE_D5, 0.5}, {NOTE_FS5, 2}, {NOTE_G5, 1.9},
         {NOTE_REST, 0.1}
     };
+
+    const BuzzerSound START_SOUND = {
+        {NOTE_C5, 0.5}, {NOTE_D5, 0.5}, {NOTE_E5, 0.5}, {NOTE_F5, 0.5}, {NOTE_G5, 4}
+    };
+
+    const BuzzerSound REEL_SOUND = {
+        {NOTE_C5, 0.5}
+    };
+
+    const BuzzerSound START_PLAYING_SOUND = {
+        {NOTE_F5, 1}, {NOTE_REST, 0.5}, {NOTE_F5, 1}, {NOTE_REST, 0.5}, {NOTE_F5, 3}
+    };
 }
 
 

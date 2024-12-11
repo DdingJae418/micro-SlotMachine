@@ -22,7 +22,12 @@ public:
 
 class FlickerAnimation : public FNDAnimation
 {
+private:
+    float timeGap;
+    bool turnOn;
+    int flickerCount;
 public:
+    void StartAnimation(float speed, int start, int end) override;
     void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 

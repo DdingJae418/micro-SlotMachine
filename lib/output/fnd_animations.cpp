@@ -1,11 +1,12 @@
 #include "fnd_animations.h"
+#include <algorithm>
 
 /**** No Animation ****/
 
 void NoAnimation::PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output)
 {
     // Just output original display
-    output = original;
+    std::copy(original.begin() + startDigit, original.begin() + endDigit + 1, output.begin() + startDigit);
 
     // End animation
     isAnimationPlaying = false;
@@ -60,5 +61,39 @@ void SwipeAnimation::PlayAnimation(const vector<unsigned char>& original, vector
 
         // End animation
         if(currentDigit > endDigit) isAnimationPlaying = false;
+    }
+}
+
+
+
+/**** Flicker Animation *****/
+
+void FlickerAnimation::StartAnimation(float speed, int start, int end)
+{
+    FNDAnimation::StartAnimation(speed, start, end);
+    timeGap = 1 / speed;
+    turnOn = true;
+    flickerCount = 0;
+}
+
+void FlickerAnimation::PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output)
+{
+    if (turnOn)
+    {
+        std::copy(original.begin() + startDigit, original.begin() + endDigit + 1, output.begin() + startDigit);
+    }
+    else
+    {
+        std::fill(output.begin() + startDigit, output.begin() + endDigit + 1, 0);
+    }
+
+    playTime += Time::DeltaTime();
+    if(playTime > timeGap)
+    {
+        playTime = 0;
+        turnOn = !turnOn;
+        flickerCount++;
+
+        if(flickerCount == 7) isAnimationPlaying = false;
     }
 }
