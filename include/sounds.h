@@ -43,6 +43,10 @@ namespace sounds
         {NOTE_C6, 1.0}, {NOTE_B5, 0.5}, {NOTE_A5, 0.5}, {NOTE_REST, 0.2},
         {NOTE_A5, 0.5}, {NOTE_G5, 0.5}, {NOTE_F5, 0.5}, {NOTE_E5, 0.5}, {NOTE_REST, 0.2}
     };
+
+    inline const BuzzerSound RESET_SOUND = {
+        {NOTE_G5, 0.5}, {NOTE_F5, 0.5}, {NOTE_E5, 0.5}, {NOTE_D5, 0.5}, {NOTE_C5, 4}
+    };
 }
 
 

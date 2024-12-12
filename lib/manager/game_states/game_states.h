@@ -5,8 +5,8 @@
 
 // Reel variables
 inline const float REEL_DELAY[4] = {0.6, 0.4, 0.3, 0.2};
-inline float reelTime[4] = {0,0,0,0};
-inline int reels[4] = {0,0,0,0};
+inline vector<float> reelTime = {0,0,0,0};
+inline vector<unsigned char> reels = {0,0,0,0};
 inline int stoppedReel = -1;
 
 
@@ -74,6 +74,9 @@ private:
     BuzzerController& buzzer;
     float time;
     int phase;
+private:
+    void HandleFirstPhase();
+    void HandleSecondPhase();
 public:
     ResettingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;

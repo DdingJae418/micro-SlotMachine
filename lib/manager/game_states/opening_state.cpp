@@ -13,7 +13,7 @@ const float FIRST_ANIMATION_SPEED = 8;
 const float SECOND_ANIMATION_SPEED = 4;
 const float START_SOUND_SPEED = 5;
 const float START_PLAYING_SOUND_SPEED = 6;
-const float REEL_SOUND_SPEED = 8;
+const float REEL_SOUND_SPEED = 10;
 
 
 OpeningState::OpeningState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
@@ -51,6 +51,8 @@ void OpeningState::UpdateState()
         break;
     case FOURTH_PHASE:
         HandleFourthPhase();
+        break;
+    default:
         break;
     }
 }
