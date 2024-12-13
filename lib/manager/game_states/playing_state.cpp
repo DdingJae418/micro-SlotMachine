@@ -16,7 +16,7 @@ void PlayingState::StartState()
 
 void PlayingState::UpdateState()
 {   
-    for (int i = stoppedReel + 1; i < 4; i++)
+    for (int i = stoppingReel; i < 4; i++)
         reelTime[i] += Time::DeltaTime();
 
     bool reelChanged = false;
@@ -35,8 +35,7 @@ void PlayingState::UpdateState()
     // Show reel numbers
     if(reelChanged)
     {
-        int num = reels[0] * 1000 + reels[1] * 100 + 
-            reels[2] * 10 + reels[3];
+        int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
         fnd.StartAnimation(Animation::NONE);
     }

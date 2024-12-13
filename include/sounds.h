@@ -11,7 +11,7 @@ using NoteIter = std::vector<std::pair<double, float>>::const_iterator;
 namespace sounds
 {
     // Zenonia3 ost
-    inline BuzzerSound READY_SONG = {
+    inline const BuzzerSound READY_SONG = {
         {NOTE_FS5, 1.5}, {NOTE_G5, 0.5}, {NOTE_A5, 2.95}, {NOTE_REST, 0.05}, {NOTE_A5, 0.5},
         {NOTE_G5, 0.5}, {NOTE_FS5, 0.5}, {NOTE_G5, 0.5}, {NOTE_A5, 0.5}, {NOTE_CS6, 0.5},
         {NOTE_D6, 4}, {NOTE_REST, 1}, {NOTE_A5, 1}, {NOTE_E6, 1.5}, {NOTE_D6, 0.45}, 
@@ -47,6 +47,13 @@ namespace sounds
     inline const BuzzerSound RESET_SOUND = {
         {NOTE_G5, 0.5}, {NOTE_F5, 0.5}, {NOTE_E5, 0.5}, {NOTE_D5, 0.5}, {NOTE_C5, 4}
     };
+
+    inline const BuzzerSound LEVER_SOUND = {
+        {NOTE_D6, 0.5}, {NOTE_G6, 0.5}
+    };
+
+    // Reverse sound of the LEVER_SOUND
+    inline const BuzzerSound REEL_STOP_SOUND(LEVER_SOUND.rbegin(), LEVER_SOUND.rend());
 }
 
 

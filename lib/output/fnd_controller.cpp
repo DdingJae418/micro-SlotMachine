@@ -9,7 +9,7 @@ const vector<unsigned char> play = {0x73, 0x38, 0x77, 0x6E};
 
 
 FNDController::FNDController()
-    : originalDisplay(4, 0), outputDisplay(4, 0), currentAnimation(nullptr)
+    : originalDisplay(4, 0), outputDisplay(4, 0)
 {
     // Set FND pin
     DDRC = 0xFF;
@@ -58,17 +58,18 @@ void FNDController::SetDisplay(Letter letter, bool consecutive)
         std::fill(outputDisplay.begin(), outputDisplay.end(), 0);
 }
 
-void FNDController::SetDisplay(int num, bool consecutive)
+void FNDController::SetDisplay(int num, bool consecutive, int start, int end)
 {
     // Set original display
-    originalDisplay[0] = number[(num / 1000) % 10];
-    originalDisplay[1] = number[(num / 100) % 10];
-    originalDisplay[2] = number[(num / 10) % 10];
-    originalDisplay[3] = number[num % 10];
+    for (int i = start; i <= end; i++) {
+        int divisor = 1;
+        for (int j = 0; j < (3 - i); j++) divisor *= 10;
+        originalDisplay[i] = number[(num / divisor) % 10];
+    }
 
     // Empty output display
     if (!consecutive)
-        std::fill(outputDisplay.begin(), outputDisplay.end(), 0);
+        std::fill(outputDisplay.begin() + start, outputDisplay.begin() + end + 1, 0);
 }
 
 void FNDController::AddAnimation(Animation animation, FNDAnimation* fndAnimation)
@@ -78,19 +79,35 @@ void FNDController::AddAnimation(Animation animation, FNDAnimation* fndAnimation
 
 void FNDController::StartAnimation(Animation animation, float speed, int start, int end)
 {
-    currentAnimation = animationMap[animation];
-    currentAnimation->StartAnimation(speed, start, end);
+    // Start animation
+    FNDAnimation* startingAnimation = animationMap[animation];
+    startingAnimation->StartAnimation(speed, start, end);
+    playingAnimations.push_back(startingAnimation);
 }
 
 bool FNDController::IsAnimationPlaying()
 {
-    return currentAnimation && currentAnimation->IsAnimationPlaying();
+    bool playing = false;
+    for (auto ani : playingAnimations)
+        if(ani->IsAnimationPlaying())
+            playing = true;
+    return playing;
 }
 
 void FNDController::Update()
 {
-    if(currentAnimation && currentAnimation->IsAnimationPlaying())
-        currentAnimation->PlayAnimation(originalDisplay, outputDisplay);
+    for (auto iter = playingAnimations.begin(); iter != playingAnimations.end(); )
+    {
+        if((*iter)->IsAnimationPlaying())
+        {
+            (*iter)->PlayAnimation(originalDisplay, outputDisplay);
+            iter++;
+        }
+        else
+        {
+            iter = playingAnimations.erase(iter);
+        }
+    }
 }
 
 FNDController::~FNDController()
@@ -113,6 +130,11 @@ void FNDAnimation::StartAnimation(float spd, int start, int end)
 bool FNDAnimation::IsAnimationPlaying()
 {
     return isAnimationPlaying;
+}
+
+std::pair<int, int> FNDAnimation::GetAnimationRange()
+{
+    return std::make_pair(startDigit, endDigit);
 }
 
 

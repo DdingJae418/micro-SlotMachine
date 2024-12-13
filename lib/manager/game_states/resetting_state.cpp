@@ -26,7 +26,7 @@ void ResettingState::StartState()
     // Reset reels
     std::fill(reelTime.begin(), reelTime.end(), 0);
     std::fill(reels.begin(), reels.end(), 0);
-    stoppedReel = -1;
+    stoppingReel = 0;
 
     // Flicker current screen
     fnd.StartAnimation(Animation::FLICKER, FLICKER_SPEED);

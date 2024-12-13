@@ -4,6 +4,7 @@
 #include <fixed_rate_updater.h>
 #include <game_enums.h>
 #include <vector>
+#include <list>
 #include <map>
 
 using std::vector;
@@ -21,7 +22,7 @@ private:
     vector<unsigned char> originalDisplay;
     vector<unsigned char> outputDisplay;
     map<Animation, FNDAnimation*> animationMap;
-    FNDAnimation* currentAnimation;
+    std::list<FNDAnimation*> playingAnimations;
 private:
     FNDController();
     ~FNDController();
@@ -32,7 +33,7 @@ public:
     static void DestroyInstance();
     unsigned char GetOutputDigit(int digit);
     void SetDisplay(Letter letter, bool consecutive = true);
-    void SetDisplay(int num, bool consecutive = true);
+    void SetDisplay(int num, bool consecutive = true, int start = 0, int end = 3);
     void AddAnimation(Animation Animation, FNDAnimation* fndAnimation);
     void StartAnimation(Animation animation, float speed = 1, int start = 0, int end = 3);
     bool IsAnimationPlaying();
@@ -50,6 +51,7 @@ protected:
 public:
     FNDAnimation() : isAnimationPlaying(false) {}
     bool IsAnimationPlaying();
+    std::pair<int, int> GetAnimationRange();
     virtual void StartAnimation(float spd, int start, int end);
     virtual void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) = 0;
     virtual ~FNDAnimation() {}

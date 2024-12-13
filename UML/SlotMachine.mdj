@@ -7388,9 +7388,9 @@
 												"$ref": "AAAAAAGTs/JArt32ki8="
 											},
 											"font": "Arial;13;0",
-											"left": 664,
+											"left": 663,
 											"top": 264,
-											"width": 104.431640625,
+											"width": 107.31982421875,
 											"height": 13,
 											"alpha": 3.6052392625925993,
 											"distance": 4.47213595499958,
@@ -7398,7 +7398,7 @@
 												"$ref": "AAAAAAGTs/JAr9332HU="
 											},
 											"edgePosition": 1,
-											"text": " [stopped real < 3]"
+											"text": " [stopping real < 3]"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -7588,7 +7588,7 @@
 												"$ref": "AAAAAAGTs/gKSeFcwVI="
 											},
 											"edgePosition": 1,
-											"text": " [stopped real == 3]"
+											"text": " [stopping real == 3]"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -7996,7 +7996,7 @@
 									"target": {
 										"$ref": "AAAAAAGTs+iCUsrpTyY="
 									},
-									"guard": "stopped real < 3"
+									"guard": "stopping real < 3"
 								},
 								{
 									"_type": "UMLTransition",
@@ -8046,7 +8046,7 @@
 									"target": {
 										"$ref": "AAAAAAGTs+kC9sxdTLU="
 									},
-									"guard": "stopped real == 3"
+									"guard": "stopping real == 3"
 								},
 								{
 									"_type": "UMLTransition",

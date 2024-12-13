@@ -7,7 +7,7 @@
 inline const float REEL_DELAY[4] = {0.6, 0.4, 0.3, 0.2};
 inline vector<float> reelTime = {0,0,0,0};
 inline vector<unsigned char> reels = {0,0,0,0};
-inline int stoppedReel = -1;
+inline int stoppingReel = 0;
 
 
 class ReadyState : public GameState
@@ -92,6 +92,8 @@ private:
     GameManager& gm;
     FNDController& fnd;
     BuzzerController& buzzer;
+    const float MAX_DELAY;
+    float delay;
     float time;
     int phase;
 public:
