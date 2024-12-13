@@ -3,14 +3,14 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-const int FIRST_PHASE = 1;
-const int SECOND_PHASE = 2;
-const int THIRD_PHASE = 3;
+constexpr int FIRST_PHASE = 1;
+constexpr int SECOND_PHASE = 2;
+constexpr int THIRD_PHASE = 3;
 
-const float FLICKER_SPEED = 5;
-const float SWIPE_SPEED = 20;
-const float SOUND_SPEED = 5;
-const float WAITING_TIME = 1.5;
+constexpr float FLICKER_SPEED = 5;
+constexpr float SWIPE_SPEED = 20;
+constexpr float SOUND_SPEED = 5;
+constexpr float WAITING_TIME = 1.5;
 
 
 ResettingState::ResettingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)

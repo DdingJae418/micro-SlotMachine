@@ -22,7 +22,7 @@ int main(void)
     BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
-    GameManager::GetInstance().SetGameState(State::PLAYING);
+    GameManager::GetInstance().SetGameState(State::READY);
 
     // Update modules every frame
     FixedRateUpdater& updater = FixedRateUpdater::GetInstance();

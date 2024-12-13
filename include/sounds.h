@@ -49,7 +49,7 @@ namespace sounds
     };
 
     inline const BuzzerSound LEVER_SOUND = {
-        {NOTE_D6, 0.5}, {NOTE_G6, 0.5}
+        {NOTE_REST, 0.2}, {NOTE_D6, 0.5}, {NOTE_G6, 0.5}
     };
 
     // Reverse sound of the LEVER_SOUND

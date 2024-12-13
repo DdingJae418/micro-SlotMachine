@@ -3,17 +3,17 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-const int FIRST_PHASE = 0;
-const int SECOND_PHASE = 1;
-const int THIRD_PHASE = 2;
-const int FOURTH_PHASE = 3;
+constexpr int FIRST_PHASE = 0;
+constexpr int SECOND_PHASE = 1;
+constexpr int THIRD_PHASE = 2;
+constexpr int FOURTH_PHASE = 3;
 
-const float WAITING_TIME = 2.5;
-const float FIRST_ANIMATION_SPEED = 8;
-const float SECOND_ANIMATION_SPEED = 4;
-const float START_SOUND_SPEED = 5;
-const float START_PLAYING_SOUND_SPEED = 6;
-const float REEL_SOUND_SPEED = 10;
+constexpr float WAITING_TIME = 2;
+constexpr float FIRST_ANIMATION_SPEED = 8;
+constexpr float SECOND_ANIMATION_SPEED = 4;
+constexpr float START_SOUND_SPEED = 5;
+constexpr float START_PLAYING_SOUND_SPEED = 6;
+constexpr float REEL_SOUND_SPEED = 10;
 
 
 OpeningState::OpeningState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)

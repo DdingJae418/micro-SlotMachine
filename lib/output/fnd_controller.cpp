@@ -132,11 +132,6 @@ bool FNDAnimation::IsAnimationPlaying()
     return isAnimationPlaying;
 }
 
-std::pair<int, int> FNDAnimation::GetAnimationRange()
-{
-    return std::make_pair(startDigit, endDigit);
-}
-
 
 
 // Show FND display on every timer interrupt

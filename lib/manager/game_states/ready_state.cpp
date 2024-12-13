@@ -3,8 +3,8 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-const float ANIMATION_SPEED = 30;
-const float WAITING_TIME = 0.9;
+constexpr float ANIMATION_SPEED = 30;
+constexpr float WAITING_TIME = 0.9;
 
 
 ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)

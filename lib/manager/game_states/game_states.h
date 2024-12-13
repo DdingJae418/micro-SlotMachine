@@ -92,10 +92,13 @@ private:
     GameManager& gm;
     FNDController& fnd;
     BuzzerController& buzzer;
-    const float MAX_DELAY;
     float delay;
     float time;
     int phase;
+private:
+    void HandleFirstPhase();
+    void HandleSecondPhase();
+    void HandleThirdPhase();
 public:
     StoppingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;

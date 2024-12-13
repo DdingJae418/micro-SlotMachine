@@ -51,7 +51,6 @@ protected:
 public:
     FNDAnimation() : isAnimationPlaying(false) {}
     bool IsAnimationPlaying();
-    std::pair<int, int> GetAnimationRange();
     virtual void StartAnimation(float spd, int start, int end);
     virtual void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) = 0;
     virtual ~FNDAnimation() {}
