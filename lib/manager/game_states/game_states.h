@@ -108,4 +108,26 @@ public:
     void SwitchTwo() override;
 };
 
+class ResultState : public GameState
+{
+private:
+    GameManager& gm;
+    FNDController& fnd;
+    BuzzerController& buzzer;
+    Letter result;
+    int phase;
+    bool isAnimationOver;
+private:
+    void HandleFirstPhase();
+    void HandleSecondPhase();
+    void HandleThirdPhase();
+public:
+    ResultState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
+    void StartState() override;
+    void UpdateState() override;
+    void EndState() override;
+    void SwitchOne() override;
+    void SwitchTwo() override;
+};
+
 #endif

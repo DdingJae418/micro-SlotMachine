@@ -15,7 +15,7 @@ namespace game_enums
 
     enum class Animation
     {
-        NONE, SWIPE, FLICKER
+        NONE, SWIPE, FLICKER, ROUND_ROBIN, WRITE_FAIL, WRITE_1ST, WRITE_2ND, WRITE_3RD
     };
 
     enum class Sound

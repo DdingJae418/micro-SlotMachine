@@ -85,6 +85,12 @@ void FNDController::StartAnimation(Animation animation, float speed, int start, 
     playingAnimations.push_back(startingAnimation);
 }
 
+void FNDController::StopAnimations()
+{
+    // Clear every animations
+    playingAnimations.clear();
+}
+
 bool FNDController::IsAnimationPlaying()
 {
     bool playing = false;

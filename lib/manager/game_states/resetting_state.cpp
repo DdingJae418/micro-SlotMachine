@@ -28,7 +28,8 @@ void ResettingState::StartState()
     std::fill(reels.begin(), reels.end(), 0);
     stoppingReel = 0;
 
-    // Flicker current screen
+    // Stop and flicker current screen
+    fnd.StopAnimations();
     fnd.StartAnimation(Animation::FLICKER, FLICKER_SPEED);
 
     // Play reset sound

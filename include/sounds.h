@@ -54,6 +54,17 @@ namespace sounds
 
     // Reverse sound of the LEVER_SOUND
     inline const BuzzerSound REEL_STOP_SOUND(LEVER_SOUND.rbegin(), LEVER_SOUND.rend());
+
+    inline const BuzzerSound FAIL_SOUND = {
+        {NOTE_E5, 0.5}, {NOTE_DS5, 0.5}, {NOTE_D5, 0.5}, {NOTE_CS5, 1}
+    };
+
+    inline const BuzzerSound SUCCESS_SOUND = {
+        {NOTE_G6, 0.5}, {NOTE_REST, 0.1}, {NOTE_G6, 0.2}, {NOTE_REST, 0.1}, {NOTE_G6, 0.2}, 
+        {NOTE_REST, 0.1}, {NOTE_G6, 1.5}, {NOTE_REST, 0.1}, {NOTE_A6, 0.75}, {NOTE_G6, 0.85}, 
+        {NOTE_A6, 0.9}, {NOTE_B6, 0.6}, {NOTE_REST, 0.1}, {NOTE_B6, 0.3}, {NOTE_REST, 0.1}, 
+        {NOTE_B6, 0.3}, {NOTE_REST, 0.1}, {NOTE_B6, 3}
+    };
 }
 
 

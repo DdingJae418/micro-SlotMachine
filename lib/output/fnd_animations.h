@@ -31,4 +31,14 @@ public:
     void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 
+class RoundRobinAnimation : public FNDAnimation
+{
+private:
+    int currentDigit;
+    float timeGap;
+public:
+    void StartAnimation(float speed, int start, int end) override;
+    void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
+};
+
 #endif

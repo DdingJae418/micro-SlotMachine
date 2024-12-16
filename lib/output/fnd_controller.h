@@ -36,6 +36,7 @@ public:
     void SetDisplay(int num, bool consecutive = true, int start = 0, int end = 3);
     void AddAnimation(Animation Animation, FNDAnimation* fndAnimation);
     void StartAnimation(Animation animation, float speed = 1, int start = 0, int end = 3);
+    void StopAnimations();
     bool IsAnimationPlaying();
     void Update() override;
 };
