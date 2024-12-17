@@ -54,37 +54,33 @@ private:
 protected:
     WordSequence* currentSeq;
     WordIter currentIter;
-    void WriteWord(vector<unsigned char>& output);
 public:
     void StartAnimation(float speed, int start, int end) override;
+    void PlayAnimation(const vector<unsigned char>& _, vector<unsigned char>& output) override;
 };
 
 class WriteFailAnimation : public WriteAnimation
 {
 public:
     void StartAnimation(float speed, int start, int end) override;
-    void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 
 class Write1stAnimation : public WriteAnimation
 {
 public:
     void StartAnimation(float speed, int start, int end) override;
-    void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 
 class Write2ndAnimation : public WriteAnimation
 {
 public:
     void StartAnimation(float speed, int start, int end) override;
-    void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 
 class Write3rdAnimation : public WriteAnimation
 {
 public:
     void StartAnimation(float speed, int start, int end) override;
-    void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;
 };
 
 
