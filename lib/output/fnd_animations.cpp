@@ -97,3 +97,57 @@ void FlickerAnimation::PlayAnimation(const vector<unsigned char>& original, vect
         if(flickerCount == 7) isAnimationPlaying = false;
     }
 }
+
+
+
+/**** Round Robin Animation ****/
+void RoundRobinAnimation::StartAnimation(float speed, int start, int end)
+{
+    FNDAnimation::StartAnimation(speed, start, end);
+    currentDigit = startDigit;
+    timeGap = 1 / speed;
+    playTime = timeGap;
+    movingRight = true;
+    roundCount = 0;
+}
+
+void RoundRobinAnimation::PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output)
+{
+    // Count second
+    playTime += Time::DeltaTime();
+
+    if(playTime > timeGap)
+    {
+        if (roundCount > 1)
+        {
+            isAnimationPlaying = false;
+            std::fill(output.begin() + startDigit, output.begin() + endDigit + 1, 0);
+            return;
+        }
+
+        // Turn currentDigit on, end turn off others
+        std::fill(output.begin() + startDigit, output.begin() + endDigit + 1, 0);
+        output[currentDigit] = original[currentDigit];
+
+        // Move to next digit
+        if(movingRight)
+        {        
+            currentDigit++;
+            if (currentDigit > endDigit)
+            {
+                currentDigit--;
+                movingRight = false;
+            }
+        }
+        else
+        {
+            currentDigit--;
+            if(currentDigit < startDigit)
+            {
+                roundCount++;
+                movingRight = true;
+            }
+        }
+        playTime = 0;
+    }
+}

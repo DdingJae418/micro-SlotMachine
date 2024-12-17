@@ -1,16 +1,18 @@
 #include <fnd_controller.h>
 #include <buzzer_controller.h>
 #include <game_enums.h>
+#include <algorithm>
 #include "game_states.h"
 
 constexpr int FIRST_PHASE = 1;
 constexpr int SECOND_PHASE = 2;
+constexpr int THIRD_PHASE = 3;
 
 constexpr float FAIL_SOUND_SPEED = 0.8;
 constexpr float SUCCESS_SOUND_SPEED = 2.5;
-constexpr float SWIPE_SPEED = 2;
-constexpr float ROUND_ROBIN_SPEED = 1;
-constexpr float WRITE_SPEED = 1;
+constexpr float SWIPE_SPEED = 10;
+constexpr float ROUND_ROBIN_SPEED = 15;
+constexpr float WRITE_SPEED = 10;
 
 Letter CheckResult();
 
@@ -21,6 +23,14 @@ ResultState::ResultState(GameManager& gm, FNDController& fnd, BuzzerController& 
 
 void ResultState::StartState()
 {
+    // // test
+    // reels[0] = 0;
+    // reels[1] = 2;
+    // reels[2] = 1;
+    // reels[3] = 3;
+    // fnd.SetDisplay(0213);
+    // fnd.StartAnimation(Animation::NONE);
+
     result = CheckResult();
     phase = FIRST_PHASE;
     isAnimationOver = false;
@@ -36,6 +46,8 @@ void ResultState::UpdateState()
     case SECOND_PHASE:
         HandleSecondPhase();
         break;
+    case THIRD_PHASE:
+        HandleThirdPhase();
     default:
         break;
     }
@@ -58,24 +70,29 @@ void ResultState::HandleFirstPhase()
     phase++;
 }
 
-// Play writingR animation according to the result
+// Play writing animation according to the result
 void ResultState::HandleSecondPhase()
 {
     if (fnd.IsAnimationPlaying()) return;
 
+    // Start writing animation
     fnd.SetDisplay(result);
     switch (result)
     {
     case Letter::FAIL:
+        fnd.SetDisplay(Letter::FAIL);
         fnd.StartAnimation(Animation::WRITE_FAIL, WRITE_SPEED);
         break;
     case Letter::_1ST:
+        fnd.SetDisplay(Letter::_1ST);
         fnd.StartAnimation(Animation::WRITE_1ST, WRITE_SPEED);
         break;
     case Letter::_2ND:
+        fnd.SetDisplay(Letter::_2ND);
         fnd.StartAnimation(Animation::WRITE_2ND, WRITE_SPEED);
         break;
     case Letter::_3RD:
+        fnd.SetDisplay(Letter::_3RD);
         fnd.StartAnimation(Animation::WRITE_3RD, WRITE_SPEED);
         break;;
     default:
@@ -102,7 +119,36 @@ void ResultState::SwitchTwo()
 
 Letter CheckResult()
 {
-    return Letter::FAIL;
+    vector<unsigned char> results(reels);
+    std::sort(results.begin(), results.end());
+
+    int sameCount = 0;
+    for (size_t i = 1; i < results.size(); i++)
+        if (results[i] == results[i-1])
+            sameCount++;
+
+    if (sameCount == 3)
+    {
+        return Letter::_1ST;
+    }
+    else if(sameCount == 2)
+    {
+        return Letter::_3RD;
+    }
+    else
+    {   
+        int count = 0;
+        for (size_t i = 1; i < results.size(); i++)
+            if (results[i] - results[i-1] == 1)
+                count++;
+
+        if (count == 3)
+            return Letter::_2ND;
+        else if (count == 2)
+            return Letter::_3RD;
+        else
+            return Letter::FAIL;
+    }
 }
 
 

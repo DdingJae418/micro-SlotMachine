@@ -6,6 +6,10 @@
 /*** Const Variables ***/
 const vector<unsigned char> number = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
 const vector<unsigned char> play = {0x73, 0x38, 0x77, 0x6E};
+const vector<unsigned char> fail = {0x71, 0x77, 0x06, 0x38};
+const vector<unsigned char> _1st = {0x00, 0x30, 0x6d, 0xf8};
+const vector<unsigned char> _2nd = {0x00, 0x5b, 0x54, 0xde};
+const vector<unsigned char> _3rd = {0x00, 0x4f, 0x50, 0xde};
 
 
 FNDController::FNDController()
@@ -43,11 +47,23 @@ void FNDController::SetDisplay(Letter letter, bool consecutive)
     // Set original display
     switch (letter)
     {
-    case Letter::NONE :
+    case Letter::NONE:
         std::fill(originalDisplay.begin(), originalDisplay.end(), 0);
         break;
-    case Letter::PLAY :
+    case Letter::PLAY:
         originalDisplay = play;
+        break;
+    case Letter::FAIL:
+        originalDisplay = fail;
+        break;
+    case Letter::_1ST:
+        originalDisplay = _1st;
+        break;
+    case Letter::_2ND:
+        originalDisplay = _2nd;
+        break;
+    case Letter::_3RD:
+        originalDisplay = _3rd;
         break;
     default:
         break;

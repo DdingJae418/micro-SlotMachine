@@ -19,10 +19,10 @@ int main(void)
     AddUpdateListeners();
 
     // Mute buzzer when testing
-    //BuzzerController::GetInstance().MuteBuzzer(true);
+   //BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
-    GameManager::GetInstance().SetGameState(State::RESULT);
+    GameManager::GetInstance().SetGameState(State::READY);
 
     // Update modules every frame
     FixedRateUpdater& updater = FixedRateUpdater::GetInstance();
@@ -55,6 +55,11 @@ void AddAnimations()
     fnd.AddAnimation(Animation::NONE, new NoAnimation());
     fnd.AddAnimation(Animation::SWIPE, new SwipeAnimation());
     fnd.AddAnimation(Animation::FLICKER, new FlickerAnimation());
+    fnd.AddAnimation(Animation::ROUND_ROBIN, new RoundRobinAnimation());
+    fnd.AddAnimation(Animation::WRITE_FAIL, new WriteFailAnimation());
+    fnd.AddAnimation(Animation::WRITE_1ST, new Write1stAnimation());
+    fnd.AddAnimation(Animation::WRITE_2ND, new Write2ndAnimation());
+    fnd.AddAnimation(Animation::WRITE_3RD, new Write3rdAnimation());
 }
 
 void AddUpdateListeners()
