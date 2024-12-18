@@ -122,33 +122,24 @@ Letter CheckResult()
     vector<unsigned char> results(reels);
     std::sort(results.begin(), results.end());
 
-    int sameCount = 0;
+    int sameCnt = 1;
+    int contCnt = 0;
     for (size_t i = 1; i < results.size(); i++)
-        if (results[i] == results[i-1])
-            sameCount++;
-
-    if (sameCount == 3)
     {
+        if (results[0] == results[i])
+            sameCnt++;
+        if (results[i] - results[i-1] == 1)
+            contCnt++;
+    }
+
+    if (sameCnt == 4)
         return Letter::_1ST;
-    }
-    else if(sameCount == 2)
-    {
+    else if(contCnt == 3)
+        return Letter::_2ND;
+    else if(sameCnt == 3 || contCnt == 2)
         return Letter::_3RD;
-    }
     else
-    {   
-        int count = 0;
-        for (size_t i = 1; i < results.size(); i++)
-            if (results[i] - results[i-1] == 1)
-                count++;
-
-        if (count == 3)
-            return Letter::_2ND;
-        else if (count == 2)
-            return Letter::_3RD;
-        else
-            return Letter::FAIL;
-    }
+        return Letter::FAIL;
 }
 
 
