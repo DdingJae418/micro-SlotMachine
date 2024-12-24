@@ -122,21 +122,40 @@ Letter CheckResult()
     vector<unsigned char> results(reels);
     std::sort(results.begin(), results.end());
 
-    int sameCnt = 1;
-    int contCnt = 0;
+    int maxSameCnt = 1, currentSameCnt = 1;
+    int maxContCnt = 1, currentContCnt = 1;
+
     for (size_t i = 1; i < results.size(); i++)
     {
-        if (results[0] == results[i])
-            sameCnt++;
-        if (results[i] - results[i-1] == 1)
-            contCnt++;
+        // Check for identical consecutive values
+        if (results[i] == results[i - 1])
+        {
+            currentSameCnt++;
+            maxSameCnt = std::max(maxSameCnt, currentSameCnt);
+        }
+        else
+        {
+            currentSameCnt = 1;
+        }
+
+        // Check for consecutive increasing values
+        if (results[i] - results[i - 1] == 1)
+        {
+            currentContCnt++;
+            maxContCnt = std::max(maxContCnt, currentContCnt);
+        }
+        else
+        {
+            currentContCnt = 1;
+        }
     }
 
-    if (sameCnt == 4)
+    // Return the result based on the counts
+    if (maxSameCnt >= 4)
         return Letter::_1ST;
-    else if(contCnt == 3)
+    else if (maxContCnt >= 4)
         return Letter::_2ND;
-    else if(sameCnt == 3 || contCnt == 2)
+    else if (maxSameCnt == 3 || maxContCnt == 3)
         return Letter::_3RD;
     else
         return Letter::FAIL;

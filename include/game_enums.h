@@ -18,11 +18,6 @@ namespace game_enums
         NONE, SWIPE, FLICKER, ROUND_ROBIN, WRITE_FAIL, WRITE_1ST, WRITE_2ND, WRITE_3RD
     };
 
-    enum class Sound
-    {
-        READY_SONG
-    };
-
     enum class Switch
     {
         ONE, TWO

@@ -6,8 +6,6 @@
 #include <game_enums.h>
 #include <sounds.h>
 
-using game_enums::Sound;
-
 class BuzzerController : public UpdateListener
 {
 private:
