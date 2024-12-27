@@ -6,7 +6,7 @@
 #include "note_frequency.h"
 
 using BuzzerSound = std::vector<std::pair<double, float>>;
-using NoteIter = std::vector<std::pair<double, float>>::const_iterator;
+using NoteIter = BuzzerSound::const_iterator;
 
 namespace sounds
 {
