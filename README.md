@@ -44,9 +44,9 @@
 
 ## 7. 당첨 결과 확인 알고리즘
 
-<div style="text-align: center;">
+<div align="center">
     <img src="/media/result%20table.png" alt="그림1. 당첨 결과표" width="50%">
-    <p style="font-size: 14px; color: gray;">그림1. 당첨 결과표</p>
+    <p>그림1. 당첨 결과표</p>
 </div>
 
 - 위 당첨 결과표에 따라 당첨 결과를 확인하고 출력하도록 알고리즘을 작성하였다.
@@ -56,14 +56,15 @@
 
 ## 1. 요구 분석
 
-<div style="text-align: center;">
+<div align="center">
     <img src="/media/use%20case.png" alt="그림2. 유즈케이스 다이어그램" width="70%">
-    <p style="font-size: 14px; color: gray;">그림2. 유즈케이스 다이어그램</p>
+    <p>그림2. 유즈케이스 다이어그램</p>
 </div>
 
 - **Start Game (게임 시작하기)**
     
     [기본 흐름]
+
     1. FND 디스플레이에 'PLAY' 글자가 표시 되었다가 사라지기를 반복한다. 경쾌한 음악이 출력되고 있다.
     2. 플레이어가 스위치1을 누른다.
     3. 게임 시작 효과음이 출력된다.
@@ -75,7 +76,9 @@
 - **Stop Reel (릴 멈추기)**
     
     [제약 조건] 현재 회전하고 있는 릴이 1개 이상 존재한다.
+
     [기본 흐름]
+
     1. 플레이어가 스위치1을 누른다.
     2. 클릭 효과음이 출력된다.
     3. 현재 회전 중이던 릴 중 가장 왼쪽의 릴이 멈추기 시작한다.
@@ -85,7 +88,9 @@
 - **Check Result (결과 확인하기)**
     
     [활성화 조건] 마지막 4번째 릴까지의 숫자가 확정되었다.
+
     [기본 흐름]
+
     1. 정지된 모든 릴의 숫자 조합을 확인한다.
     2. 당첨일 경우 릴의 숫자가 왼쪽에서 오른쪽으로, 다시 오른쪽에서 왼쪽으로 점등되었다가 마지막에 전체적으로 두 번 깜빡이며 당첨 효과음이 출력된다.
     3. 모든 숫자가 동일할 경우 '1st' 가, 숫자가 오름차순이나 내림차순으로 정렬되었을 경우 '2nd'가, 3개 이상 동일하거나 정렬되었을 경우 '3rd'를 FND 디스플레이에 출력한다.
@@ -94,6 +99,7 @@
 - **Reset Game (게임 초기화하기)**
     
     [기본 흐름]
+    
     1. 플레이어가 게임 플레이 도중에 스위치 2를 클릭했다.
     2. 재시작 효과음이 출력된다.
     3. FND 화면이 정지되고, 두 번 깜빡인 후 왼쪽 디지트부터 오른쪽으로 지워지듯이 사라진다.
@@ -102,9 +108,9 @@
 
 ## 2. 시스템 설계
 
-<div style="text-align: center;">
+<div align="center">
     <img src="/media/class%20diagram.png" alt="그림3. 클래스 다이어그램">
-    <p style="font-size: 14px; color: gray;">그림3. 클래스 다이어그램</p>
+    <p>그림3. 클래스 다이어그램</p>
 </div>
 
 - **FixedRateUpdater** : 타이머 인터럽트를 설정하여, 지정된 프레임레이트(기본값 60)로 매 프레임마다 등록된 UpdateListener들의 Update 함수를 호출한다.
@@ -118,9 +124,9 @@
 
 ## 3. 상태 머신 설계
 
-<div style="text-align: center;">
+<div align="center">
     <img src="/media/state%20chart.png" alt="그림4. 스테이트 차트 다이어그램" width="80%">
-    <p style="font-size: 14px; color: gray;">그림4. 스테이트 차트 다이어그램</p>
+    <p>그림4. 스테이트 차트 다이어그램</p>
 </div>
 
 - **Ready :** 게임을 처음 시작하면 돌입하는 상태로, 스위치1을 클릭하면 Opening 상태로 이동한다.
