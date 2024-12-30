@@ -11,7 +11,7 @@ JKIT-128-1 실습 키트를 사용하여 개발을 진행하였으며, 내장된
 ## 1.  고정 속도 갱신
 
 <div align="center">
-    <img src="/media/class%20diagram.png" alt="그림1. 클래스 다이어그램">
+    <img src="/media/class_diagram.png" alt="그림1. 클래스 다이어그램">
     <p>그림1. 클래스 다이어그램</p>
 </div>
 
@@ -55,25 +55,25 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 <div align="center">
     <div>
         <div align = "center">
-            <img src="/media/swipe%animation.gif" alt="영상1. Swipe 애니메이션">
+            <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
         </div>
         <div align = "center">
-            <img src="/media/flicker%animation.gif" alt="영상2. Flicker 애니메이션">
+            <img src="/media/flicker_animation.gif" alt="영상2. Flicker 애니메이션">
             <p>영상2. Flicker 애니메이션</p>
         </div>
         <div align = "center">
-            <img src="/media/round%robin%animation.gif" alt="영상3. Round Robin 애니메이션">
+            <img src="/media/round_robin_animation.gif" alt="영상3. Round Robin 애니메이션">
             <p>영상3. Round Robin 애니메이션</p>
         </div>
     </div>
     <div>
         <div align = "center">
-            <img src="/media/write%animation.gif" alt="영상1. Write 애니메이션">
+            <img src="/media/write_animation.gif" alt="영상1. Write 애니메이션">
             <p>영상4. Write 애니메이션</p>
         </div>
         <div align = "center">
-            <img src="/media/swipe%animation.gif" alt="영상1. Swipe 애니메이션">
+            <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
         </div>
     </div>
