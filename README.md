@@ -54,28 +54,28 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 
 <table align="center">
     <tr>
-        <div align = "center" width = 30%>
+        <td align = "center" width = 30%>
             <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
-        </div>
-        <div align = "center" width = 30%>
+        </td>
+        <td align = "center" width = 30%>
             <img src="/media/flicker_animation.gif" alt="영상2. Flicker 애니메이션">
             <p>영상2. Flicker 애니메이션</p>
-        </div>
-        <div align = "center" width = 30%>
+        </td>
+        <td align = "center" width = 30%>
             <img src="/media/round_robin_animation.gif" alt="영상3. Round Robin 애니메이션">
             <p>영상3. Round Robin 애니메이션</p>
+        </td>
     </tr>
     <tr>
-        </div>
-        <div align = "center" width = 30%>
-            <img src="/media/write_animation.gif" alt="영상1. Write 애니메이션">
+        <td align = "center" width = 30%>
+            <img src="/media/write_animation.gif" alt="영상4. Write 애니메이션">
             <p>영상4. Write 애니메이션</p>
-        </div>
-        <div align = "center" width = 30%>
+        </td>
+        <td align = "center" width = 30%>
             <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
-        </div>
+        </td>
     </tr>
 </table>
 
