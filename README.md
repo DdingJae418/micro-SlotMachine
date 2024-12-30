@@ -24,7 +24,6 @@ JKIT-128-1 실습 키트를 사용하여 개발을 진행하였으며, 내장된
 
 ```cpp
 // lib/manager/game_manager.cpp 코드 일부
-
 GameManager& GameManager::GetInstance()
 {
     if (!instance) instance = new GameManager();
@@ -37,21 +36,21 @@ void GameManager::DestroyInstance()
     instance = nullptr;
 }
 
+GameManager* GameManager::instance = nullptr;
+
 ...
 
 // lib/manager/game_states/ready_state.cpp 코드 일부
-
 ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
     : gm(gm), fnd(fnd), buzzer(buzzer)
 { }
-
 ```
 
 - GameManager, FixedRateUpdater, BuzzerController 등 전역적으로 사용되는 객체들을 관리하기 위해 싱글톤 패턴을 사용하였다.
 - 프로그램 종료 전 DestroySingleTones() 함수를 통해, 싱글톤 객체들의 자원을 명시적으로 해제하여 메모리를 관리하였다.
 - GameState 타입 객체들이 싱글톤 객체와 너무 큰 결합도를 갖지 않도록, GameState 타입 객체 생성 시 각각의 싱글톤 객체를 주입받도록 설계하였다.
 
-## 3. FND 애니메이션 동시 재생
+## 3. FND 애니메이션 재생
 
 - FND 화면의 4개 디지트를 부분적으로 할당받아 특정 애니메이션을 재생할 수 있도록 설계하였다.
 - 재생 디지트가 겹치지 않는 선에서 여러개의 애니메이션을 동시에 재생할 수 있도록 하여 보다 다양한 화면 연출이 가능하도록 하였다.

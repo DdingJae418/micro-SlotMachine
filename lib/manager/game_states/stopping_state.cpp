@@ -38,6 +38,7 @@ void StoppingState::StartState()
     }
 
     // Flicker stopping reel at first
+    fnd.SetDisplay(reels[stoppingReel], true, stoppingReel, stoppingReel);
     fnd.StartAnimation(Animation::FLICKER, FIRST_FLICKER_SPEED, stoppingReel, stoppingReel);
 }
 
@@ -116,7 +117,6 @@ void StoppingState::HandleThirdPhase()
 
     gm.SetGameState(State::PLAYING);
 }
-
 
 void StoppingState::EndState() { }
 void StoppingState::SwitchOne() { }
