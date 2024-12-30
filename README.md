@@ -53,12 +53,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 ## 3. FND 애니메이션 재생
 
 <div align="center">
-    <table>
-        <colgroup>
-            <col width="30%">
-            <col width="30%">
-            <col width="30%">
-        </colgroup>
+    <table width=90%>
         <tr>
             <td align = "center">
                 <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
@@ -74,11 +69,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
             </td>
         </tr>
     </table>
-    <table>
-        <colgroup>
-            <col width="30%">
-            <col width="30%">
-        </colgroup>
+    <table width=60%>
         <tr>
             <td align = "center">
                 <img src="/media/write_animation.gif" alt="영상4. Write 애니메이션">
