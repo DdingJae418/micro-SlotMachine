@@ -52,30 +52,32 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 
 ## 3. FND 애니메이션 재생
 
-<div align="center">
-    <div display="flex">
-        <div align = "center">
+<table align="center">
+    <tr>
+        <div align = "center" width = 30%>
             <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
         </div>
-        <div align = "center">
+        <div align = "center" width = 30%>
             <img src="/media/flicker_animation.gif" alt="영상2. Flicker 애니메이션">
             <p>영상2. Flicker 애니메이션</p>
         </div>
-        <div align = "center">
+        <div align = "center" width = 30%>
             <img src="/media/round_robin_animation.gif" alt="영상3. Round Robin 애니메이션">
             <p>영상3. Round Robin 애니메이션</p>
+    </tr>
+    <tr>
         </div>
-        <div align = "center">
+        <div align = "center" width = 30%>
             <img src="/media/write_animation.gif" alt="영상1. Write 애니메이션">
             <p>영상4. Write 애니메이션</p>
         </div>
-        <div align = "center">
+        <div align = "center" width = 30%>
             <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
         </div>
-    </div>
-</div>
+    </tr>
+</table>
 
 - FND 화면의 4개 디지트를 부분적으로 할당받아 특정 애니메이션을 재생할 수 있도록 설계하였다.
 - 재생 디지트가 겹치지 않는 선에서 여러개의 애니메이션을 동시에 재생할 수 있도록 하여 보다 다양한 화면 연출이 가능하도록 하였다.
