@@ -8,7 +8,7 @@ JKIT-128-1 실습 키트를 사용하여 개발을 진행하였으며, 내장된
 
 # ⌜ 기능 구현 ⌟
 
-## 1.  고정 속도 갱신
+## 1. 고정 속도 갱신
 
 <div align="center">
     <img src="/media/class_diagram.png" alt="그림1. 클래스 다이어그램">
@@ -53,7 +53,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 ## 3. FND 애니메이션 재생
 
 <div align="center">
-    <div>
+    <div display="flex">
         <div align = "center">
             <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
             <p>영상1. Swipe 애니메이션</p>
@@ -66,8 +66,6 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
             <img src="/media/round_robin_animation.gif" alt="영상3. Round Robin 애니메이션">
             <p>영상3. Round Robin 애니메이션</p>
         </div>
-    </div>
-    <div>
         <div align = "center">
             <img src="/media/write_animation.gif" alt="영상1. Write 애니메이션">
             <p>영상4. Write 애니메이션</p>
@@ -112,7 +110,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 - 2143과 같이 정렬되지 않은 연속된 숫자에 대해서도 당첨을 인식하도록 하였다.
 
 # ⌜ 진행 과정 ⌟
-    
+
 ## 2. 시스템 설계
 
 - **FixedRateUpdater** : 타이머 인터럽트를 설정하여, 지정된 프레임레이트(기본값 60)로 매 프레임마다 등록된 UpdateListener들의 Update 함수를 호출한다.
