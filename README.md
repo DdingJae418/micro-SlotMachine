@@ -3,11 +3,12 @@
 # ⌜ 개요 ⌟
 
 현대의 디지털 슬롯 머신은 플레이어가 버튼을 누른 순간 RNG(Random Number Generator)로 숫자를 생성하여 모든 릴(reel)의 결과를 곧바로 정한다. 이러한 방식에서는 순전히 운에 따라 당첨 여부가 결정되므로, 옛날 기계식 슬롯 머신의 동작 방식에 착안하여, 좀 더 플레이어가 결과에 개입할 수 있는 슬롯 머신 게임기를 만들어 보고자 하였다.
+
 JKIT-128-1 실습 키트를 사용하여 개발을 진행하였으며, 내장된 부품 중 부저, FND 인터페이스, 스위치를 사용하였다. 부저를 통해 게임 노래, 효과음을 출력하고, FND를 사용해 게임 화면을 출력하였다. 스위치를 눌러 게임을 진행하거나 초기화 할 수 있도록 하였다.
 
 # ⌜ 기능 구현 ⌟
 
-## 1.  고정 속도 업데이트 적용
+## 1.  고정 속도 갱신
 
 <div align="center">
     <img src="/media/class%20diagram.png" alt="그림1. 클래스 다이어그램">
@@ -22,6 +23,8 @@ JKIT-128-1 실습 키트를 사용하여 개발을 진행하였으며, 내장된
 ## 2. 싱글톤 관리 및 의존성 주입
 
 ```cpp
+// lib/manager/game_manager.cpp 코드 일부
+
 GameManager& GameManager::GetInstance()
 {
     if (!instance) instance = new GameManager();
@@ -33,6 +36,15 @@ void GameManager::DestroyInstance()
     delete instance;
     instance = nullptr;
 }
+
+...
+
+// lib/manager/game_states/ready_state.cpp 코드 일부
+
+ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
+    : gm(gm), fnd(fnd), buzzer(buzzer)
+{ }
+
 ```
 
 - GameManager, FixedRateUpdater, BuzzerController 등 전역적으로 사용되는 객체들을 관리하기 위해 싱글톤 패턴을 사용하였다.
