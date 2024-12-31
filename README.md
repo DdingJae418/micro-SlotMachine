@@ -53,7 +53,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 ## 3. FND 애니메이션 재생
 
 <div align="center">
-    <table width=90%>
+    <table>
         <tr>
             <td align = "center">
                 <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
@@ -68,16 +68,18 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
                 <p>영상3. Round Robin 애니메이션</p>
             </td>
         </tr>
-    </table>
-    <table width=60%>
         <tr>
             <td align = "center">
                 <img src="/media/write_animation.gif" alt="영상4. Write 애니메이션">
                 <p>영상4. Write 애니메이션</p>
             </td>
             <td align = "center">
-                <img src="/media/swipe_animation.gif" alt="영상1. Swipe 애니메이션">
-                <p>영상1. Swipe 애니메이션</p>
+                <img src="/media/flicker_and_swipe_animation.gif" alt="영상5. Flicker + Swipe 애니메이션">
+                <p>영상5. Flicker + Swipe 애니메이션</p>
+            </td>
+            <td align = "center">
+                <img src="/media/sequential_output.gif" alt="영상6. 디지트 순차 출력">
+                <p>영상6. 디지트 순차 출력</p>
             </td>
         </tr>
     </table>
@@ -108,7 +110,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 ## 7. 당첨 결과 확인 알고리즘
 
 <div align="center">
-    <img src="/media/result%20table.png" alt="그림1. 당첨 결과표" width="50%">
+    <img src="/media/result_table.png" alt="그림1. 당첨 결과표" width="50%">
     <p>그림1. 당첨 결과표</p>
 </div>
 
@@ -131,7 +133,7 @@ ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& bu
 ## 3. 상태 머신 설계
 
 <div align="center">
-    <img src="/media/state%20chart.png" alt="그림4. 스테이트 차트 다이어그램" width="80%">
+    <img src="/media/state_chart.png" alt="그림4. 스테이트 차트 다이어그램" width="80%">
     <p>그림4. 스테이트 차트 다이어그램</p>
 </div>
 
