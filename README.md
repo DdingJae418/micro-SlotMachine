@@ -144,13 +144,23 @@ void BuzzerController::Update()
 ## 4. 상태 패턴 활용
 
 <div align="center">
-    <img src="/media/class_diagram2.png" alt="그림1. 클래스 다이어그램" width="70%">
+    <img src="/media/class_diagram2.png" alt="그림2. 클래스 다이어그램" width="70%">
     <p>그림2. 클래스 다이어그램</p>
 </div>
 
 - GameManager에서는 상태 패턴을 사용하여 ReadyState, OpeningState 등 다양한 상태를 관리할 수 있도록 하였다.
 - GameState 인터페이스를 정의하고, 구체적인 상태 클래스가 해당 인터페이스를 구현하도록 설계하여 의존성을 역전시켰다.
 - 각각의 상태 클래스는 FNDController와 BuzzerController를 사용하여 게임 화면과 음악을 출력한다.
+
+<div align="center">
+    <img src="/media/state_chart.png" alt="그림2. 스테이트 차트 다이어그램" width="50%">
+    <p>그림3. 스테이트 차트 다이어그램</p>
+</div>
+
+- 게임 상태의 전환을 명확하게 나타내고자 스테이트 차트 다이어그램을 사용하였다.
+- 스위치1(SW1)이나 스위치2(SW2)를 눌러 상태를 전환할 수 있으며, 화면 연출이 끝나면 자동으로 다음 상태로 넘어가는 경우 라벨을 붙이지 않았다.
+- Stopping은 릴이 정지되는 애니메이션이 출력되는 상태이다. 아직 회전 중인 릴이 남아있을 경우 Playing 상태로, 모든 릴이
+정지 되었을 경우 Result 상태로 넘어간다.
 
 ## 5. 당첨 결과 확인 알고리즘
 
