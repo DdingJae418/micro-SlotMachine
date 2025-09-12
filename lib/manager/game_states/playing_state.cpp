@@ -37,7 +37,7 @@ void PlayingState::UpdateState()
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
-        fnd.StartAnimation(Animation::NONE);
+        fnd.StartAnimation(Animation::Plain);
     }
 }
 

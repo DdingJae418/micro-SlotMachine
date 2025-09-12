@@ -48,12 +48,12 @@ namespace sounds
         {NOTE_G5, 0.5}, {NOTE_F5, 0.5}, {NOTE_E5, 0.5}, {NOTE_D5, 0.5}, {NOTE_C5, 4}
     };
 
-    inline const BuzzerSound LEVER_SOUND = {
+    inline const BuzzerSound LeverSound = {
         {NOTE_REST, 0.2}, {NOTE_D6, 0.5}, {NOTE_G6, 0.5}
     };
 
     // Reverse sound of the LEVER_SOUND
-    inline const BuzzerSound REEL_STOP_SOUND(LEVER_SOUND.rbegin(), LEVER_SOUND.rend());
+    inline const BuzzerSound REEL_STOP_SOUND(LeverSound.rbegin(), LeverSound.rend());
 
     inline const BuzzerSound FAIL_SOUND = {
         {NOTE_E5, 0.5}, {NOTE_DS5, 0.5}, {NOTE_D5, 0.5}, {NOTE_CS5, 1}

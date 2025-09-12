@@ -28,16 +28,21 @@ void FixedRateUpdater::DestroyInstance()
 
 void FixedRateUpdater::AddListener(UpdateListener* listener)
 {
-    listeners.push_back(listener);
+    if (listener != nullptr)
+    {
+        listeners.push_back(listener);
+    }
 }
 
 void FixedRateUpdater::CallListeners()
 {
-    // Update only when update flag is set
     if (updateFlag)
     {
-        for (auto& listener : listeners)
-            listener->Update();
+        for (UpdateListener* listener : listeners)
+        {
+            if (listener != nullptr)
+                listener->Update();
+        }
         updateFlag = false;
     }
 }
@@ -53,7 +58,7 @@ void FixedRateUpdater::SetFrameRate(int rate)
     }
 }
 
-int FixedRateUpdater::GetFrameRate()
+int FixedRateUpdater::GetFrameRate() const
 {
     return frameRate;
 }
@@ -72,8 +77,7 @@ float Time::DeltaTime()
 }
 
 
-/*** Timer Interrupt ***/
-
+// Timer interrupt
 ISR(TIMER1_COMPA_vect) 
 {
     // Set fixed update flag

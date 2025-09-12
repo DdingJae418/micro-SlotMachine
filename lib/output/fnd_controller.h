@@ -21,7 +21,7 @@ private:
     static FNDController* instance;
     vector<unsigned char> originalDisplay;
     vector<unsigned char> outputDisplay;
-    map<Animation, FNDAnimation*> animationMap;
+    map<Animation, FNDAnimation*> animations;
     std::list<FNDAnimation*> playingAnimations;
 private:
     FNDController();

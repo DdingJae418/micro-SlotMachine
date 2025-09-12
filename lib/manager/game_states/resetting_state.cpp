@@ -8,7 +8,7 @@ constexpr int SECOND_PHASE = 2;
 constexpr int THIRD_PHASE = 3;
 
 constexpr float FLICKER_SPEED = 5;
-constexpr float SWIPE_SPEED = 20;
+constexpr float SwipeSpeed = 20;
 constexpr float SOUND_SPEED = 5;
 constexpr float WAITING_TIME = 1.5;
 
@@ -30,7 +30,7 @@ void ResettingState::StartState()
 
     // Stop and flicker current screen
     fnd.StopAnimations();
-    fnd.StartAnimation(Animation::FLICKER, FLICKER_SPEED);
+    fnd.StartAnimation(Animation::Flicker, FLICKER_SPEED);
 
     // Play reset sound
     buzzer.StartSound(&sounds::RESET_SOUND, SOUND_SPEED);
@@ -56,8 +56,8 @@ void ResettingState::HandleFirstPhase()
 {
     if(fnd.IsAnimationPlaying()) return;
 
-    fnd.SetDisplay(Letter::NONE);
-    fnd.StartAnimation(Animation::SWIPE, SWIPE_SPEED);
+    fnd.SetDisplay(Letter::None);
+    fnd.StartAnimation(Animation::Swipe, SwipeSpeed);
     phase++;
 }
 

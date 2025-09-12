@@ -29,8 +29,8 @@ void OpeningState::StartState()
     recentReel = 0;
 
     // Flicker FND display
-    fnd.SetDisplay(Letter::PLAY);
-    fnd.StartAnimation(Animation::FLICKER, FIRST_ANIMATION_SPEED);
+    fnd.SetDisplay(Letter::Play);
+    fnd.StartAnimation(Animation::Flicker, FIRST_ANIMATION_SPEED);
 
     // Play start sound
     buzzer.StartSound(&sounds::START_SOUND, START_SOUND_SPEED);
@@ -73,8 +73,8 @@ void OpeningState::HandleFirstPhase()
 // Turn FND screen off
 void OpeningState::HandleSecondPhase()
 {
-    fnd.SetDisplay(Letter::NONE);
-    fnd.StartAnimation(Animation::NONE);
+    fnd.SetDisplay(Letter::None);
+    fnd.StartAnimation(Animation::Plain);
     phase++;
 }
 
@@ -93,7 +93,7 @@ void OpeningState::HandleThirdPhase()
             availableReel++;
         else
         {
-            fnd.StartAnimation(Animation::FLICKER, SECOND_ANIMATION_SPEED);
+            fnd.StartAnimation(Animation::Flicker, SECOND_ANIMATION_SPEED);
             buzzer.StartSound(&sounds::START_PLAYING_SOUND, START_PLAYING_SOUND_SPEED);
             phase++;
             return;
@@ -119,7 +119,7 @@ void OpeningState::HandleThirdPhase()
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
-        fnd.StartAnimation(Animation::NONE, 1, 0, recentReel);
+        fnd.StartAnimation(Animation::Plain, 1, 0, recentReel);
         if (changedReel == recentReel) buzzer.StartSound(&sounds::REEL_SOUND, REEL_SOUND_SPEED);
     }
 }

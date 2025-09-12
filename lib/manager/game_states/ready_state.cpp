@@ -18,8 +18,8 @@ void ReadyState::StartState()
     phase = 0;
 
     // Empty FND display
-    fnd.SetDisplay(Letter::NONE, false);
-    fnd.StartAnimation(Animation::NONE);
+    fnd.SetDisplay(Letter::None, false);
+    fnd.StartAnimation(Animation::Plain);
 
     // Play ready sound
     buzzer.StartSound(&sounds::READY_SONG, 2.2, true);
@@ -32,8 +32,8 @@ void ReadyState::UpdateState()
     if (phase == 0)
     {
         // Set 'PLAY' letter and start 'SWIPE' animation at the FND display
-        fnd.SetDisplay(Letter::PLAY);
-        fnd.StartAnimation(Animation::SWIPE, ANIMATION_SPEED);
+        fnd.SetDisplay(Letter::Play);
+        fnd.StartAnimation(Animation::Swipe, ANIMATION_SPEED);
         phase++;
     }
     else
@@ -44,8 +44,8 @@ void ReadyState::UpdateState()
         // Swipe out 'PLAY' letter
         if(time > WAITING_TIME)
         {
-            fnd.SetDisplay(Letter::NONE);
-            fnd.StartAnimation(Animation::SWIPE, ANIMATION_SPEED);
+            fnd.SetDisplay(Letter::None);
+            fnd.StartAnimation(Animation::Swipe, ANIMATION_SPEED);
             time = 0;
             phase = 0;
         }

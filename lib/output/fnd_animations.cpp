@@ -3,7 +3,7 @@
 
 /**** No Animation ****/
 
-void NoAnimation::PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output)
+void PlainAnimation::PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output)
 {
     // Just output original display
     std::copy(original.begin() + startDigit, original.begin() + endDigit + 1, output.begin() + startDigit);

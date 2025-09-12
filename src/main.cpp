@@ -52,14 +52,14 @@ void AddAnimations()
 {
     FNDController& fnd = FNDController::GetInstance();
 
-    fnd.AddAnimation(Animation::NONE, new NoAnimation());
-    fnd.AddAnimation(Animation::SWIPE, new SwipeAnimation());
-    fnd.AddAnimation(Animation::FLICKER, new FlickerAnimation());
-    fnd.AddAnimation(Animation::ROUND_ROBIN, new RoundRobinAnimation());
-    fnd.AddAnimation(Animation::WRITE_FAIL, new WriteFailAnimation());
-    fnd.AddAnimation(Animation::WRITE_1ST, new Write1stAnimation());
-    fnd.AddAnimation(Animation::WRITE_2ND, new Write2ndAnimation());
-    fnd.AddAnimation(Animation::WRITE_3RD, new Write3rdAnimation());
+    fnd.AddAnimation(Animation::Plain, new PlainAnimation());
+    fnd.AddAnimation(Animation::Swipe, new SwipeAnimation());
+    fnd.AddAnimation(Animation::Flicker, new FlickerAnimation());
+    fnd.AddAnimation(Animation::RoundRobin, new RoundRobinAnimation());
+    fnd.AddAnimation(Animation::WriteFail, new WriteFailAnimation());
+    fnd.AddAnimation(Animation::Write1st, new Write1stAnimation());
+    fnd.AddAnimation(Animation::Write2nd, new Write2ndAnimation());
+    fnd.AddAnimation(Animation::Write3rd, new Write3rdAnimation());
 }
 
 void AddUpdateListeners()

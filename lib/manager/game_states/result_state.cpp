@@ -10,7 +10,7 @@ constexpr int THIRD_PHASE = 3;
 
 constexpr float FAIL_SOUND_SPEED = 0.8;
 constexpr float SUCCESS_SOUND_SPEED = 2.5;
-constexpr float SWIPE_SPEED = 10;
+constexpr float SwipeSpeed = 10;
 constexpr float ROUND_ROBIN_SPEED = 15;
 constexpr float WRITE_SPEED = 10;
 
@@ -29,7 +29,7 @@ void ResultState::StartState()
     // reels[2] = 1;
     // reels[3] = 3;
     // fnd.SetDisplay(0213);
-    // fnd.StartAnimation(Animation::NONE);
+    // fnd.StartAnimation(Animation::PLAIN);
 
     result = CheckResult();
     phase = FIRST_PHASE;
@@ -56,16 +56,16 @@ void ResultState::UpdateState()
 // Play fail/success sound and animation
 void ResultState::HandleFirstPhase()
 {
-    if (result == Letter::FAIL)
+    if (result == Letter::Fail)
     {
         buzzer.StartSound(&sounds::FAIL_SOUND, FAIL_SOUND_SPEED);
-        fnd.SetDisplay(Letter::NONE);
-        fnd.StartAnimation(Animation::SWIPE, SWIPE_SPEED);
+        fnd.SetDisplay(Letter::None);
+        fnd.StartAnimation(Animation::Swipe, SwipeSpeed);
     }
     else
     {
         buzzer.StartSound(&sounds::SUCCESS_SOUND, SUCCESS_SOUND_SPEED);
-        fnd.StartAnimation(Animation::ROUND_ROBIN, ROUND_ROBIN_SPEED);
+        fnd.StartAnimation(Animation::RoundRobin, ROUND_ROBIN_SPEED);
     }
     phase++;
 }
@@ -79,21 +79,21 @@ void ResultState::HandleSecondPhase()
     fnd.SetDisplay(result);
     switch (result)
     {
-    case Letter::FAIL:
-        fnd.SetDisplay(Letter::FAIL);
-        fnd.StartAnimation(Animation::WRITE_FAIL, WRITE_SPEED);
+    case Letter::Fail:
+        fnd.SetDisplay(Letter::Fail);
+        fnd.StartAnimation(Animation::WriteFail, WRITE_SPEED);
         break;
-    case Letter::_1ST:
-        fnd.SetDisplay(Letter::_1ST);
-        fnd.StartAnimation(Animation::WRITE_1ST, WRITE_SPEED);
+    case Letter::_1st:
+        fnd.SetDisplay(Letter::_1st);
+        fnd.StartAnimation(Animation::Write1st, WRITE_SPEED);
         break;
-    case Letter::_2ND:
-        fnd.SetDisplay(Letter::_2ND);
-        fnd.StartAnimation(Animation::WRITE_2ND, WRITE_SPEED);
+    case Letter::_2nd:
+        fnd.SetDisplay(Letter::_2nd);
+        fnd.StartAnimation(Animation::Write2nd, WRITE_SPEED);
         break;
-    case Letter::_3RD:
-        fnd.SetDisplay(Letter::_3RD);
-        fnd.StartAnimation(Animation::WRITE_3RD, WRITE_SPEED);
+    case Letter::_3rd:
+        fnd.SetDisplay(Letter::_3rd);
+        fnd.StartAnimation(Animation::Write3rd, WRITE_SPEED);
         break;;
     default:
         break;
@@ -152,13 +152,13 @@ Letter CheckResult()
 
     // Return the result based on the counts
     if (maxSameCnt >= 4)
-        return Letter::_1ST;
+        return Letter::_1st;
     else if (maxContCnt >= 4)
-        return Letter::_2ND;
+        return Letter::_2nd;
     else if (maxSameCnt == 3 || maxContCnt == 3)
-        return Letter::_3RD;
+        return Letter::_3rd;
     else
-        return Letter::FAIL;
+        return Letter::Fail;
 }
 
 

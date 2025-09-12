@@ -23,7 +23,7 @@ public:
     void AddListener(UpdateListener* listener);
     void CallListeners();
     void SetFrameRate(int rate);
-    int GetFrameRate();
+    int GetFrameRate() const;
     void SetUpdateFlag();
 };
 

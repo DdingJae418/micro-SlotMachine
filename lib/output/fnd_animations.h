@@ -6,7 +6,7 @@
 using WordSequence = const std::vector<std::pair<int, unsigned char>>;
 using WordIter = std::vector<std::pair<int, unsigned char>>::const_iterator;
 
-class NoAnimation : public FNDAnimation
+class PlainAnimation : public FNDAnimation
 {
 public:
     void PlayAnimation(const vector<unsigned char>& original, vector<unsigned char>& output) override;

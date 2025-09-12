@@ -7,10 +7,10 @@ constexpr int FIRST_PHASE = 1;
 constexpr int SECOND_PHASE = 2;
 constexpr int THIRD_PHASE = 3;
 
-constexpr float LEVER_SOUND_SPEED = 3;
+constexpr float LeverSoundSpeed = 3;
 constexpr float REEL_SOUND_SPEED = 10;
-constexpr float SWIPE_SPEED = 20;
-constexpr float FIRST_FLICKER_SPEED = 10;
+constexpr float SwipeSpeed = 20;
+constexpr float FirstFlickerSpeed = 10;
 constexpr float LAST_FLICKER_SPEED = 6;
 constexpr float SLOW_FACTOR = 0.05;
 constexpr float MAX_DELAY = 1;
@@ -28,18 +28,19 @@ void StoppingState::StartState()
     phase = FIRST_PHASE;
 
     // Play lever sound
-    buzzer.StartSound(&sounds::LEVER_SOUND, LEVER_SOUND_SPEED);
+    buzzer.StartSound(&sounds::LeverSound, LeverSoundSpeed);
 
     // Swipe out right side of the stopping reel
-    if (stoppingReel < 3)
+    if (stoppingReel < reels.size() - 1)
     {
-        fnd.SetDisplay(Letter::NONE);
-        fnd.StartAnimation(Animation::SWIPE, SWIPE_SPEED, stoppingReel + 1);
+        fnd.SetDisplay(Letter::None);
+        fnd.StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel + 1);
     }
 
     // Flicker stopping reel at first
-    fnd.SetDisplay(reels[stoppingReel], true, stoppingReel, stoppingReel);
-    fnd.StartAnimation(Animation::FLICKER, FIRST_FLICKER_SPEED, stoppingReel, stoppingReel);
+    int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
+    fnd.SetDisplay(num, true, stoppingReel, stoppingReel);
+    fnd.StartAnimation(Animation::Flicker, FirstFlickerSpeed, stoppingReel, stoppingReel);
 }
 
 void StoppingState::UpdateState()
@@ -79,14 +80,14 @@ void StoppingState::HandleFirstPhase()
         if (delay < MAX_DELAY)
         {
             if(!fnd.IsAnimationPlaying())
-                fnd.StartAnimation(Animation::NONE, 1, 0, stoppingReel);
+                fnd.StartAnimation(Animation::Plain, 1, 0, stoppingReel);
             if(!buzzer.IsSoundPlaying())
                 buzzer.StartSound(&sounds::REEL_SOUND, REEL_SOUND_SPEED);
         }
         else // Slowed down enough
         {
-            fnd.StartAnimation(Animation::FLICKER, LAST_FLICKER_SPEED, stoppingReel, stoppingReel);
-            buzzer.StartSound(&sounds::REEL_STOP_SOUND, LEVER_SOUND_SPEED);
+            fnd.StartAnimation(Animation::Flicker, LAST_FLICKER_SPEED, stoppingReel, stoppingReel);
+            buzzer.StartSound(&sounds::REEL_STOP_SOUND, LeverSoundSpeed);
             phase++;
         }
     }
@@ -101,7 +102,7 @@ void StoppingState::HandleSecondPhase()
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num, true, stoppingReel + 1);
-        fnd.StartAnimation(Animation::SWIPE, SWIPE_SPEED, stoppingReel++);
+        fnd.StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel++);
         phase++;
     }
     else

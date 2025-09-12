@@ -47,22 +47,22 @@ void FNDController::SetDisplay(Letter letter, bool consecutive)
     // Set original display
     switch (letter)
     {
-    case Letter::NONE:
+    case Letter::None:
         std::fill(originalDisplay.begin(), originalDisplay.end(), 0);
         break;
-    case Letter::PLAY:
+    case Letter::Play:
         originalDisplay = play;
         break;
-    case Letter::FAIL:
+    case Letter::Fail:
         originalDisplay = fail;
         break;
-    case Letter::_1ST:
+    case Letter::_1st:
         originalDisplay = _1st;
         break;
-    case Letter::_2ND:
+    case Letter::_2nd:
         originalDisplay = _2nd;
         break;
-    case Letter::_3RD:
+    case Letter::_3rd:
         originalDisplay = _3rd;
         break;
     default:
@@ -90,15 +90,20 @@ void FNDController::SetDisplay(int num, bool consecutive, int start, int end)
 
 void FNDController::AddAnimation(Animation animation, FNDAnimation* fndAnimation)
 {
-    animationMap[animation] = fndAnimation;
+    if (animations.find(animation) == animations.end())
+    {
+        animations.insert({animation, fndAnimation});
+    }
 }
 
 void FNDController::StartAnimation(Animation animation, float speed, int start, int end)
 {
-    // Start animation
-    FNDAnimation* startingAnimation = animationMap[animation];
-    startingAnimation->StartAnimation(speed, start, end);
-    playingAnimations.push_back(startingAnimation);
+    auto iter = animations.find(animation);
+    if (iter != animations.end())
+    {
+        iter->second->StartAnimation(speed, start, end);
+        playingAnimations.push_back(iter->second);
+    }
 }
 
 void FNDController::StopAnimations()
@@ -134,7 +139,7 @@ void FNDController::Update()
 
 FNDController::~FNDController()
 {
-    for (auto a : animationMap)
+    for (auto a : animations)
         delete a.second;
 }
 
