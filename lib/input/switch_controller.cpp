@@ -1,8 +1,8 @@
 #include <avr/interrupt.h>
 #include "switch_controller.h"
 
-const int SWITCH_ONE = 1;
-const int SWITCH_TWO = 2;
+const int SwitchOne = 1;
+const int SwitchTwo = 2;
 
 SwitchController::SwitchController() : isSwitchOneClicked(false), isSwitchTwoClicked(false)
 {
@@ -29,10 +29,10 @@ void SwitchController::OnSwitchClick(Switch sw)
 {
     switch (sw)
     {
-    case Switch::ONE:
+    case Switch::One:
         isSwitchOneClicked = true;
         break;
-    case Switch::TWO:
+    case Switch::Two:
         isSwitchTwoClicked = true;
         break;
     default:
@@ -44,12 +44,12 @@ void SwitchController::Update()
 {
     if(isSwitchOneClicked)
     {
-        GameManager::GetInstance().SwitchClick(Switch::ONE);
+        GameManager::GetInstance().SwitchClick(Switch::One);
         isSwitchOneClicked = false;
     }
     else if(isSwitchTwoClicked)
     {
-        GameManager::GetInstance().SwitchClick(Switch::TWO);
+        GameManager::GetInstance().SwitchClick(Switch::Two);
         isSwitchTwoClicked = false;
     }
 }
@@ -64,7 +64,7 @@ ISR(INT4_vect)
     static SwitchController& switchController = SwitchController::GetInstance();
 
     if (!(PINE & (1 << PE4)))
-        switchController.OnSwitchClick(Switch::ONE);
+        switchController.OnSwitchClick(Switch::One);
 }
 
 
@@ -74,5 +74,5 @@ ISR(INT5_vect)
     static SwitchController& switchController = SwitchController::GetInstance();
 
     if (!(PINE & (1 << PE5))) 
-        switchController.OnSwitchClick(Switch::TWO);
+        switchController.OnSwitchClick(Switch::Two);
 }

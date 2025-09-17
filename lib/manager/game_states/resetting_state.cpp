@@ -3,14 +3,14 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-constexpr int FIRST_PHASE = 1;
-constexpr int SECOND_PHASE = 2;
-constexpr int THIRD_PHASE = 3;
+constexpr int FirstPhase = 1;
+constexpr int SecondPhase = 2;
+constexpr int ThirdPhase = 3;
 
-constexpr float FLICKER_SPEED = 5;
+constexpr float FlickerSpeed = 5;
 constexpr float SwipeSpeed = 20;
-constexpr float SOUND_SPEED = 5;
-constexpr float WAITING_TIME = 1.5;
+constexpr float SoundSpeed = 5;
+constexpr float WaitingTime = 1.5;
 
 
 ResettingState::ResettingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
@@ -21,7 +21,7 @@ void ResettingState::StartState()
 {
     // Set variables
     time = 0;
-    phase = FIRST_PHASE;
+    phase = FirstPhase;
 
     // Reset reels
     std::fill(reelTime.begin(), reelTime.end(), 0);
@@ -30,20 +30,20 @@ void ResettingState::StartState()
 
     // Stop and flicker current screen
     fnd.StopAnimations();
-    fnd.StartAnimation(Animation::Flicker, FLICKER_SPEED);
+    fnd.StartAnimation(Animation::Flicker, FlickerSpeed);
 
     // Play reset sound
-    buzzer.StartSound(&sounds::RESET_SOUND, SOUND_SPEED);
+    buzzer.StartSound(&sounds::ResetSound, SoundSpeed);
 }
 
 void ResettingState::UpdateState()
 {   
     switch (phase)
     {
-    case FIRST_PHASE:
+    case FirstPhase:
         HandleFirstPhase();
         break;
-    case SECOND_PHASE:
+    case SecondPhase:
         HandleSecondPhase();
         break;
     default:
@@ -67,9 +67,9 @@ void ResettingState::HandleSecondPhase()
     if(fnd.IsAnimationPlaying()) return;
 
     time += Time::DeltaTime();
-    if (time > WAITING_TIME)
+    if (time > WaitingTime)
     {
-        gm.SetGameState(State::READY);
+        gm.SetGameState(State::Ready);
     }
 }
 

@@ -11,7 +11,7 @@ PlayingState::PlayingState(GameManager& gm, FNDController& fnd, BuzzerController
 void PlayingState::StartState()
 {
     // Start playing song
-    buzzer.StartSound(&sounds::PLAYING_SONG, 5, true);
+    buzzer.StartSound(&sounds::PlayingSong, 5, true);
 }
 
 void PlayingState::UpdateState()
@@ -24,7 +24,7 @@ void PlayingState::UpdateState()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > REEL_DELAY[i])
+        if (reelTime[i] > ReelDelay[i])
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;
@@ -44,13 +44,13 @@ void PlayingState::UpdateState()
 void PlayingState::SwitchOne() 
 { 
     // Stop reel
-    gm.SetGameState(State::STOPPING);
+    gm.SetGameState(State::Stopping);
 }
 
 void PlayingState::SwitchTwo() 
 { 
     // Reset game
-    gm.SetGameState(State::RESETTING);
+    gm.SetGameState(State::Resetting);
 }
 
 void PlayingState::EndState() { }

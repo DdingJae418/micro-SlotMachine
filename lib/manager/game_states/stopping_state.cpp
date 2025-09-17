@@ -3,17 +3,17 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-constexpr int FIRST_PHASE = 1;
-constexpr int SECOND_PHASE = 2;
-constexpr int THIRD_PHASE = 3;
+constexpr int FirstPhase = 1;
+constexpr int SecondPhase = 2;
+constexpr int ThirdPhase = 3;
 
 constexpr float LeverSoundSpeed = 3;
-constexpr float REEL_SOUND_SPEED = 10;
+constexpr float ReelSoundSpeed = 10;
 constexpr float SwipeSpeed = 20;
 constexpr float FirstFlickerSpeed = 10;
-constexpr float LAST_FLICKER_SPEED = 6;
-constexpr float SLOW_FACTOR = 0.05;
-constexpr float MAX_DELAY = 1;
+constexpr float LastFlickerSpeed = 6;
+constexpr float SlowFactor = 0.05;
+constexpr float MaxDelay = 1;
 
 
 StoppingState::StoppingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
@@ -25,7 +25,7 @@ void StoppingState::StartState()
     // Set variables
     delay = 0;
     time = 0;
-    phase = FIRST_PHASE;
+    phase = FirstPhase;
 
     // Play lever sound
     buzzer.StartSound(&sounds::LeverSound, LeverSoundSpeed);
@@ -47,13 +47,13 @@ void StoppingState::UpdateState()
 {  
     switch (phase)
     {
-    case FIRST_PHASE:
+    case FirstPhase:
         HandleFirstPhase();
         break;
-    case SECOND_PHASE:
+    case SecondPhase:
         HandleSecondPhase();
         break;
-    case THIRD_PHASE:
+    case ThirdPhase:
         HandleThirdPhase();
     default:
         break;
@@ -67,27 +67,27 @@ void StoppingState::HandleFirstPhase()
     time += Time::DeltaTime();
 
     // Increase stopping reel number, and slow down speed
-    if (reelTime[stoppingReel] > REEL_DELAY[stoppingReel] + delay)
+    if (reelTime[stoppingReel] > ReelDelay[stoppingReel] + delay)
     {
         reelTime[stoppingReel] = 0;
         reels[stoppingReel] = (reels[stoppingReel] + 1) % 10;
-        delay = SLOW_FACTOR * time * time;
+        delay = SlowFactor * time * time;
 
         // Show stopped/stopping reel numbers
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num, true, 0, stoppingReel);
 
-        if (delay < MAX_DELAY)
+        if (delay < MaxDelay)
         {
             if(!fnd.IsAnimationPlaying())
                 fnd.StartAnimation(Animation::Plain, 1, 0, stoppingReel);
             if(!buzzer.IsSoundPlaying())
-                buzzer.StartSound(&sounds::REEL_SOUND, REEL_SOUND_SPEED);
+                buzzer.StartSound(&sounds::ReelSound, ReelSoundSpeed);
         }
         else // Slowed down enough
         {
-            fnd.StartAnimation(Animation::Flicker, LAST_FLICKER_SPEED, stoppingReel, stoppingReel);
-            buzzer.StartSound(&sounds::REEL_STOP_SOUND, LeverSoundSpeed);
+            fnd.StartAnimation(Animation::Flicker, LastFlickerSpeed, stoppingReel, stoppingReel);
+            buzzer.StartSound(&sounds::ReelStopSound, LeverSoundSpeed);
             phase++;
         }
     }
@@ -107,7 +107,7 @@ void StoppingState::HandleSecondPhase()
     }
     else
     {
-        gm.SetGameState(State::RESULT);
+        gm.SetGameState(State::Result);
     }
 }
 
@@ -116,7 +116,7 @@ void StoppingState::HandleThirdPhase()
 {
     if (fnd.IsAnimationPlaying()) return;
 
-    gm.SetGameState(State::PLAYING);
+    gm.SetGameState(State::Playing);
 }
 
 void StoppingState::EndState() { }

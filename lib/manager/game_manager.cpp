@@ -27,7 +27,7 @@ void GameManager::SetGameState(State state)
 void GameManager::SwitchClick(Switch sw)
 {
     if(currentState)
-        sw == Switch::ONE ? currentState->SwitchOne() : currentState->SwitchTwo();
+        sw == Switch::One ? currentState->SwitchOne() : currentState->SwitchTwo();
 }
 
 void GameManager::Update()

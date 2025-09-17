@@ -4,15 +4,15 @@
 #include <algorithm>
 #include "game_states.h"
 
-constexpr int FIRST_PHASE = 1;
-constexpr int SECOND_PHASE = 2;
-constexpr int THIRD_PHASE = 3;
+constexpr int FirstPhase = 1;
+constexpr int SecondPhase = 2;
+constexpr int ThirdPhase = 3;
 
-constexpr float FAIL_SOUND_SPEED = 0.8;
-constexpr float SUCCESS_SOUND_SPEED = 2.5;
+constexpr float FailSoundSpeed = 0.8;
+constexpr float SuccessSoundSpeed = 2.5;
 constexpr float SwipeSpeed = 10;
-constexpr float ROUND_ROBIN_SPEED = 15;
-constexpr float WRITE_SPEED = 10;
+constexpr float RoundRobinSpeed = 15;
+constexpr float WriteSpeed = 10;
 
 Letter CheckResult();
 
@@ -32,7 +32,7 @@ void ResultState::StartState()
     // fnd.StartAnimation(Animation::PLAIN);
 
     result = CheckResult();
-    phase = FIRST_PHASE;
+    phase = FirstPhase;
     isAnimationOver = false;
 }
 
@@ -40,13 +40,13 @@ void ResultState::UpdateState()
 {   
     switch (phase)
     {
-    case FIRST_PHASE:
+    case FirstPhase:
         HandleFirstPhase();
         break;
-    case SECOND_PHASE:
+    case SecondPhase:
         HandleSecondPhase();
         break;
-    case THIRD_PHASE:
+    case ThirdPhase:
         HandleThirdPhase();
     default:
         break;
@@ -58,14 +58,14 @@ void ResultState::HandleFirstPhase()
 {
     if (result == Letter::Fail)
     {
-        buzzer.StartSound(&sounds::FAIL_SOUND, FAIL_SOUND_SPEED);
+        buzzer.StartSound(&sounds::FailSound, FailSoundSpeed);
         fnd.SetDisplay(Letter::None);
         fnd.StartAnimation(Animation::Swipe, SwipeSpeed);
     }
     else
     {
-        buzzer.StartSound(&sounds::SUCCESS_SOUND, SUCCESS_SOUND_SPEED);
-        fnd.StartAnimation(Animation::RoundRobin, ROUND_ROBIN_SPEED);
+        buzzer.StartSound(&sounds::SuccessSound, SuccessSoundSpeed);
+        fnd.StartAnimation(Animation::RoundRobin, RoundRobinSpeed);
     }
     phase++;
 }
@@ -81,19 +81,19 @@ void ResultState::HandleSecondPhase()
     {
     case Letter::Fail:
         fnd.SetDisplay(Letter::Fail);
-        fnd.StartAnimation(Animation::WriteFail, WRITE_SPEED);
+        fnd.StartAnimation(Animation::WriteFail, WriteSpeed);
         break;
     case Letter::_1st:
         fnd.SetDisplay(Letter::_1st);
-        fnd.StartAnimation(Animation::Write1st, WRITE_SPEED);
+        fnd.StartAnimation(Animation::Write1st, WriteSpeed);
         break;
     case Letter::_2nd:
         fnd.SetDisplay(Letter::_2nd);
-        fnd.StartAnimation(Animation::Write2nd, WRITE_SPEED);
+        fnd.StartAnimation(Animation::Write2nd, WriteSpeed);
         break;
     case Letter::_3rd:
         fnd.SetDisplay(Letter::_3rd);
-        fnd.StartAnimation(Animation::Write3rd, WRITE_SPEED);
+        fnd.StartAnimation(Animation::Write3rd, WriteSpeed);
         break;;
     default:
         break;
@@ -114,7 +114,7 @@ void ResultState::SwitchTwo()
 { 
     // Reset game after animation
     if (isAnimationOver)
-        gm.SetGameState(State::RESETTING);
+        gm.SetGameState(State::Resetting);
 }
 
 Letter CheckResult()

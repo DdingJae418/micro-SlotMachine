@@ -125,7 +125,7 @@ void BuzzerController::Update()
             else 
             {
                 currentSound = nullptr;
-                PlayNote(NOTE_REST);
+                PlayNote(NoteRest);
             }
         }
         else

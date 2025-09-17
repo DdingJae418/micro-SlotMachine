@@ -22,7 +22,7 @@ int main(void)
     //BuzzerController::GetInstance().MuteBuzzer(true);
 
     // Start game with ready state
-    GameManager::GetInstance().SetGameState(State::READY);
+    GameManager::GetInstance().SetGameState(State::Ready);
 
     // Update modules every frame
     FixedRateUpdater& updater = FixedRateUpdater::GetInstance();
@@ -40,12 +40,12 @@ void AddGameStates()
     FNDController& fnd = FNDController::GetInstance();
     BuzzerController& buzzer = BuzzerController::GetInstance();
 
-    gm.AddGameState(State::READY, new ReadyState(gm, fnd, buzzer));
-    gm.AddGameState(State::OPENING, new OpeningState(gm, fnd, buzzer));
-    gm.AddGameState(State::PLAYING, new PlayingState(gm, fnd, buzzer));
-    gm.AddGameState(State::RESETTING, new ResettingState(gm, fnd, buzzer));
-    gm.AddGameState(State::STOPPING, new StoppingState(gm, fnd, buzzer));
-    gm.AddGameState(State::RESULT, new ResultState(gm, fnd, buzzer));
+    gm.AddGameState(State::Ready, new ReadyState(gm, fnd, buzzer));
+    gm.AddGameState(State::Opening, new OpeningState(gm, fnd, buzzer));
+    gm.AddGameState(State::Playing, new PlayingState(gm, fnd, buzzer));
+    gm.AddGameState(State::Resetting, new ResettingState(gm, fnd, buzzer));
+    gm.AddGameState(State::Stopping, new StoppingState(gm, fnd, buzzer));
+    gm.AddGameState(State::Result, new ResultState(gm, fnd, buzzer));
 }
 
 void AddAnimations()

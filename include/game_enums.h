@@ -5,7 +5,7 @@ namespace game_enums
 {
     enum class State
     {
-        READY, OPENING, PLAYING, STOPPING, RESULT, RESETTING
+        Ready, Opening, Playing, Stopping, Result, Resetting
     };
 
     enum class Letter
@@ -20,7 +20,7 @@ namespace game_enums
 
     enum class Switch
     {
-        ONE, TWO
+        One, Two
     };
 }
 

@@ -3,17 +3,17 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-constexpr int FIRST_PHASE = 0;
-constexpr int SECOND_PHASE = 1;
-constexpr int THIRD_PHASE = 2;
-constexpr int FOURTH_PHASE = 3;
+constexpr int FirstPhase = 0;
+constexpr int SecondPhase = 1;
+constexpr int ThirdPhase = 2;
+constexpr int FourthPhase = 3;
 
-constexpr float WAITING_TIME = 2;
-constexpr float FIRST_ANIMATION_SPEED = 8;
-constexpr float SECOND_ANIMATION_SPEED = 4;
-constexpr float START_SOUND_SPEED = 5;
-constexpr float START_PLAYING_SOUND_SPEED = 6;
-constexpr float REEL_SOUND_SPEED = 10;
+constexpr float WaitingTime = 2;
+constexpr float FirstAnimationSpeed = 8;
+constexpr float SecondAnimationSpeed = 4;
+constexpr float StartSoundSpeed = 5;
+constexpr float StartPlayingSoundSpeed = 6;
+constexpr float ReelSoundSpeed = 10;
 
 
 OpeningState::OpeningState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
@@ -24,32 +24,32 @@ void OpeningState::StartState()
 {
     // Set variables
     time = 0;
-    phase = FIRST_PHASE;
+    phase = FirstPhase;
     availableReel = 0;
     recentReel = 0;
 
     // Flicker FND display
     fnd.SetDisplay(Letter::Play);
-    fnd.StartAnimation(Animation::Flicker, FIRST_ANIMATION_SPEED);
+    fnd.StartAnimation(Animation::Flicker, FirstAnimationSpeed);
 
     // Play start sound
-    buzzer.StartSound(&sounds::START_SOUND, START_SOUND_SPEED);
+    buzzer.StartSound(&sounds::StartSound, StartSoundSpeed);
 }
 
 void OpeningState::UpdateState()
 {   
     switch(phase)
     {
-    case FIRST_PHASE:
+    case FirstPhase:
         HandleFirstPhase();
         break;
-    case SECOND_PHASE:
+    case SecondPhase:
         HandleSecondPhase();
         break;
-    case THIRD_PHASE:
+    case ThirdPhase:
         HandleThirdPhase();
         break;
-    case FOURTH_PHASE:
+    case FourthPhase:
         HandleFourthPhase();
         break;
     default:
@@ -86,15 +86,15 @@ void OpeningState::HandleThirdPhase()
         reelTime[i] += Time::DeltaTime();
     time += Time::DeltaTime();
 
-    if (time > WAITING_TIME)
+    if (time > WaitingTime)
     {
         time = 0;
         if(availableReel < 3)
             availableReel++;
         else
         {
-            fnd.StartAnimation(Animation::Flicker, SECOND_ANIMATION_SPEED);
-            buzzer.StartSound(&sounds::START_PLAYING_SOUND, START_PLAYING_SOUND_SPEED);
+            fnd.StartAnimation(Animation::Flicker, SecondAnimationSpeed);
+            buzzer.StartSound(&sounds::StartPlayingSound, StartPlayingSoundSpeed);
             phase++;
             return;
         }
@@ -105,7 +105,7 @@ void OpeningState::HandleThirdPhase()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > REEL_DELAY[i])
+        if (reelTime[i] > ReelDelay[i])
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;
@@ -120,7 +120,7 @@ void OpeningState::HandleThirdPhase()
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num);
         fnd.StartAnimation(Animation::Plain, 1, 0, recentReel);
-        if (changedReel == recentReel) buzzer.StartSound(&sounds::REEL_SOUND, REEL_SOUND_SPEED);
+        if (changedReel == recentReel) buzzer.StartSound(&sounds::ReelSound, ReelSoundSpeed);
     }
 }
 
@@ -128,7 +128,7 @@ void OpeningState::HandleThirdPhase()
 void OpeningState::HandleFourthPhase()
 {
     if (!fnd.IsAnimationPlaying())
-        gm.SetGameState(State::PLAYING);
+        gm.SetGameState(State::Playing);
 
     // Rotate reels while playing flickering animation
     for (int i = 0; i < 4; i++)
@@ -139,7 +139,7 @@ void OpeningState::HandleFourthPhase()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > REEL_DELAY[i])
+        if (reelTime[i] > ReelDelay[i])
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;

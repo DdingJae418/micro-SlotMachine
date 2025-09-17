@@ -3,8 +3,8 @@
 #include <game_enums.h>
 #include "game_states.h"
 
-constexpr float ANIMATION_SPEED = 30;
-constexpr float WAITING_TIME = 0.9;
+constexpr float AnimationSpeed = 30;
+constexpr float WaitingTime = 0.9;
 
 
 ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
@@ -22,7 +22,7 @@ void ReadyState::StartState()
     fnd.StartAnimation(Animation::Plain);
 
     // Play ready sound
-    buzzer.StartSound(&sounds::READY_SONG, 2.2, true);
+    buzzer.StartSound(&sounds::ReadySong, 2.2, true);
 }
 
 void ReadyState::UpdateState()
@@ -33,7 +33,7 @@ void ReadyState::UpdateState()
     {
         // Set 'PLAY' letter and start 'SWIPE' animation at the FND display
         fnd.SetDisplay(Letter::Play);
-        fnd.StartAnimation(Animation::Swipe, ANIMATION_SPEED);
+        fnd.StartAnimation(Animation::Swipe, AnimationSpeed);
         phase++;
     }
     else
@@ -42,10 +42,10 @@ void ReadyState::UpdateState()
         time += Time::DeltaTime();
 
         // Swipe out 'PLAY' letter
-        if(time > WAITING_TIME)
+        if(time > WaitingTime)
         {
             fnd.SetDisplay(Letter::None);
-            fnd.StartAnimation(Animation::Swipe, ANIMATION_SPEED);
+            fnd.StartAnimation(Animation::Swipe, AnimationSpeed);
             time = 0;
             phase = 0;
         }
@@ -55,7 +55,7 @@ void ReadyState::UpdateState()
 void ReadyState::SwitchOne()
 {
     // Change to opening state
-    gm.SetGameState(State::OPENING);
+    gm.SetGameState(State::Opening);
 }
 
 void ReadyState::EndState() { }

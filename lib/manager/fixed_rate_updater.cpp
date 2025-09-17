@@ -40,7 +40,7 @@ void FixedRateUpdater::CallListeners()
     {
         for (UpdateListener* listener : listeners)
         {
-            if (listener != nullptr)
+            if (listener)
                 listener->Update();
         }
         updateFlag = false;

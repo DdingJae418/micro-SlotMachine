@@ -4,7 +4,7 @@
 #include "game_manager.h"
 
 // Reel variables
-inline const float REEL_DELAY[4] = {0.6, 0.4, 0.3, 0.2};
+inline const float ReelDelay[4] = {0.6, 0.4, 0.3, 0.2};
 inline vector<float> reelTime = {0,0,0,0};
 inline vector<unsigned char> reels = {0,0,0,0};
 inline int stoppingReel = 0;
