@@ -82,6 +82,7 @@ void OpeningState::HandleSecondPhase()
 // Gradually show reels at the fnd
 void OpeningState::HandleThirdPhase()
 {
+    auto& reelTime = gm.GetReelTime();
     for (int i = 0; i <= availableReel; i++)
         reelTime[i] += Time::DeltaTime();
     time += Time::DeltaTime();
@@ -103,9 +104,10 @@ void OpeningState::HandleThirdPhase()
     int changedReel = -1;
 
     // Increase reel numbers
+    auto& reels = gm.GetReels();
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > ReelDelay[i])
+        if (reelTime[i] > gm.GetReelDelay(i))
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;
@@ -131,6 +133,8 @@ void OpeningState::HandleFourthPhase()
         gm.SetGameState(State::Playing);
 
     // Rotate reels while playing flickering animation
+    auto& reelTime = gm.GetReelTime();
+    auto& reels = gm.GetReels();
     for (int i = 0; i < 4; i++)
         reelTime[i] += Time::DeltaTime();
 
@@ -139,7 +143,7 @@ void OpeningState::HandleFourthPhase()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > ReelDelay[i])
+        if (reelTime[i] > gm.GetReelDelay(i))
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;

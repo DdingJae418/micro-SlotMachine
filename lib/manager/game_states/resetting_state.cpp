@@ -24,9 +24,11 @@ void ResettingState::StartState()
     phase = FirstPhase;
 
     // Reset reels
+    auto& reelTime = gm.GetReelTime();
+    auto& reels = gm.GetReels();
     std::fill(reelTime.begin(), reelTime.end(), 0);
     std::fill(reels.begin(), reels.end(), 0);
-    stoppingReel = 0;
+    gm.SetStoppingReel(0);
 
     // Stop and flicker current screen
     fnd.StopAnimations();

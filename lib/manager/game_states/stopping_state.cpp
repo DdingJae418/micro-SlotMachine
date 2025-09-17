@@ -30,6 +30,9 @@ void StoppingState::StartState()
     // Play lever sound
     buzzer.StartSound(&sounds::LeverSound, LeverSoundSpeed);
 
+    auto& reels = gm.GetReels();
+    int stoppingReel = gm.GetStoppingReel();
+
     // Swipe out right side of the stopping reel
     if (stoppingReel < reels.size() - 1)
     {
@@ -63,11 +66,15 @@ void StoppingState::UpdateState()
 // Slowly stop reel
 void StoppingState::HandleFirstPhase()
 {
+    auto& reelTime = gm.GetReelTime();
+    auto& reels = gm.GetReels();
+    int stoppingReel = gm.GetStoppingReel();
+
     reelTime[stoppingReel] += Time::DeltaTime();
     time += Time::DeltaTime();
 
     // Increase stopping reel number, and slow down speed
-    if (reelTime[stoppingReel] > ReelDelay[stoppingReel] + delay)
+    if (reelTime[stoppingReel] > gm.GetReelDelay(stoppingReel) + delay)
     {
         reelTime[stoppingReel] = 0;
         reels[stoppingReel] = (reels[stoppingReel] + 1) % 10;
@@ -98,11 +105,15 @@ void StoppingState::HandleSecondPhase()
 {
     if (fnd.IsAnimationPlaying()) return;
 
+    auto& reels = gm.GetReels();
+    int stoppingReel = gm.GetStoppingReel();
+
     if(stoppingReel < 3)
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
         fnd.SetDisplay(num, true, stoppingReel + 1);
-        fnd.StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel++);
+        fnd.StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel);
+        gm.SetStoppingReel(stoppingReel + 1);
         phase++;
     }
     else

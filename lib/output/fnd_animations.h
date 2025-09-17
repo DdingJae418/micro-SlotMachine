@@ -1,5 +1,5 @@
-#ifndef NO_ANIMATION_H
-#define NO_ANIMATION_H
+#ifndef FND_ANIMATIONS_H
+#define FND_ANIMATIONS_H
 
 #include <fnd_controller.h>
 

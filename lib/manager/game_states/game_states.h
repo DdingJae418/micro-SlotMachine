@@ -1,13 +1,7 @@
-#ifndef GAME_STATE_H
-#define GAME_STATE_H
+#ifndef GAME_STATES_H
+#define GAME_STATES_H
 
 #include "game_manager.h"
-
-// Reel variables
-inline const float ReelDelay[4] = {0.6, 0.4, 0.3, 0.2};
-inline vector<float> reelTime = {0,0,0,0};
-inline vector<unsigned char> reels = {0,0,0,0};
-inline int stoppingReel = 0;
 
 
 class ReadyState : public GameState

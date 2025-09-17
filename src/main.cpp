@@ -26,11 +26,12 @@ int main(void)
 
     // Update modules every frame
     FixedRateUpdater& updater = FixedRateUpdater::GetInstance();
+
     while(true) updater.CallListeners();
 
-    // Destory all single tone objects
+    // This line should never be reached in normal embedded operation
     DestroySingleTones();
-
+    
     return 0;
 }
 

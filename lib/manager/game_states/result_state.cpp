@@ -14,7 +14,7 @@ constexpr float SwipeSpeed = 10;
 constexpr float RoundRobinSpeed = 15;
 constexpr float WriteSpeed = 10;
 
-Letter CheckResult();
+Letter CheckResult(GameManager& gm);
 
 
 ResultState::ResultState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
@@ -31,7 +31,7 @@ void ResultState::StartState()
     // fnd.SetDisplay(0213);
     // fnd.StartAnimation(Animation::PLAIN);
 
-    result = CheckResult();
+    result = CheckResult(gm);
     phase = FirstPhase;
     isAnimationOver = false;
 }
@@ -117,8 +117,9 @@ void ResultState::SwitchTwo()
         gm.SetGameState(State::Resetting);
 }
 
-Letter CheckResult()
+Letter CheckResult(GameManager& gm)
 {
+    const auto& reels = gm.GetReels();
     vector<unsigned char> results(reels);
     std::sort(results.begin(), results.end());
 

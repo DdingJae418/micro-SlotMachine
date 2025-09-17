@@ -15,7 +15,11 @@ void PlayingState::StartState()
 }
 
 void PlayingState::UpdateState()
-{   
+{
+    auto& reelTime = gm.GetReelTime();
+    auto& reels = gm.GetReels();
+    int stoppingReel = gm.GetStoppingReel();
+
     for (int i = stoppingReel; i < 4; i++)
         reelTime[i] += Time::DeltaTime();
 
@@ -24,7 +28,7 @@ void PlayingState::UpdateState()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > ReelDelay[i])
+        if (reelTime[i] > gm.GetReelDelay(i))
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;

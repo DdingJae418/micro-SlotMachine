@@ -13,15 +13,6 @@ typedef GameState* GameStatePtr;
 
 class GameManager : public UpdateListener
 {
-private:
-    static GameManager* instance;
-    std::map<State, GameStatePtr> gameStateMap;
-    GameState* currentState;
-private:
-    GameManager() : currentState(nullptr) {}
-    ~GameManager();
-    GameManager(const GameManager&) = delete;
-    GameManager& operator=(const GameManager&) = delete;
 public:
     static GameManager& GetInstance();
     static void DestroyInstance();
@@ -29,6 +20,32 @@ public:
     void SetGameState(State state);
     void SwitchClick(Switch sw);
     void Update() override;
+
+    // Reel management methods
+    float GetReelDelay(int index) const { return ReelDelay[index]; }
+    std::vector<float>& GetReelTime() { return reelTime; }
+    const std::vector<float>& GetReelTime() const { return reelTime; }
+    std::vector<unsigned char>& GetReels() { return reels; }
+    const std::vector<unsigned char>& GetReels() const { return reels; }
+    int GetStoppingReel() const { return stoppingReel; }
+    void SetStoppingReel(int value) { stoppingReel = value; }
+
+private:    
+    GameManager();
+    ~GameManager();
+    GameManager(const GameManager&)             = delete;
+    GameManager& operator=(const GameManager&)  = delete;  
+
+    static GameManager* instance;
+    std::map<State, GameStatePtr> gameStateMap;
+    GameState* currentState;
+
+    // Reel management variables
+    const float ReelDelay[4];
+    std::vector<float> reelTime;
+    std::vector<unsigned char> reels;
+    int stoppingReel;
+    
 };
 
 class GameState

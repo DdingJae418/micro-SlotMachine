@@ -1,5 +1,14 @@
 #include <game_manager.h>
 
+GameManager::GameManager()
+    : currentState {nullptr}
+    , ReelDelay {0.6f, 0.4f, 0.3f, 0.2f}
+    , reelTime(4, 0.0f)
+    , reels(4, 0)
+    , stoppingReel {0}
+{
+}
+
 GameManager& GameManager::GetInstance()
 {
     if (!instance) instance = new GameManager();
