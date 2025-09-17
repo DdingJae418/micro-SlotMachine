@@ -9,9 +9,8 @@ using game_enums::State;
 using game_enums::Switch;
 using std::vector;
 
-using GameStatePtr = GameState*;
+using GameStatePtr = class GameState*;
 
-class GameState;
 class FNDController;
 class BuzzerController;
 
@@ -19,37 +18,36 @@ class GameManager : public UpdateListener
 {
 public:
     static GameManager& GetInstance();
-    static void         DestroyInstance();
+    static void DestroyInstance();
 
     void AddGameState(State state, GameStatePtr statePtr);
     void SetGameState(State state);
     void SwitchClick(Switch sw);
     
-    float   GetReelDelay(int index) const   { return ReelDelay[index]; }
-    int     GetStoppingReel() const         { return stoppingReel; }
-    void    SetStoppingReel(int value)      { stoppingReel = value; }
+    float GetReelDelay(int index) const { return ReelDelay[index]; }
+    int GetStoppingReel() const { return stoppingReel; }
+    void SetStoppingReel(int value) { stoppingReel = value; }
 
-    vector<float>&                  GetReelTime()       { return reelTime; }
-    const vector<float>&            GetReelTime() const { return reelTime; }
-    vector<unsigned char>&          GetReels()          { return reels; }
-    const vector<unsigned char>&    GetReels() const    { return reels; }
+    vector<float>& GetReelTime() { return reelTime; }
+    const vector<float>& GetReelTime() const { return reelTime; }
+    vector<unsigned char>& GetReels() { return reels; }
+    const vector<unsigned char>& GetReels() const { return reels; }
 
     virtual void Update() override;
 
 private:    
     GameManager();
     ~GameManager();
-    GameManager(const GameManager&)             = delete;
-    GameManager& operator=(const GameManager&)  = delete;  
+    GameManager(const GameManager&) = delete;
+    GameManager& operator=(const GameManager&) = delete;  
 
     static GameManager* instance;
-
-    std::map<State, GameStatePtr>   gameStateMap;
-    vector<float>                   reelTime;
-    vector<unsigned char>           reels;
-    GameStatePtr                    currentState;
-    const float                     ReelDelay[4];
-    int                             stoppingReel;
+    std::map<State, GameStatePtr> gameStateMap;
+    vector<float> reelTime;
+    vector<unsigned char> reels;
+    GameStatePtr currentState;
+    const float ReelDelay[4];
+    int stoppingReel;
     
 };
 

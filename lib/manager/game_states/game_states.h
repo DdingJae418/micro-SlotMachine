@@ -6,9 +6,6 @@
 
 class ReadyState : public GameState
 {
-private:
-    float time;
-    int phase;
 public:
     ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -16,20 +13,14 @@ public:
     void EndState() override;
     void SwitchOne() override;
     void SwitchTwo() override;
+
+private:
+    float time;
+    int phase;
 };
 
 class OpeningState : public GameState
 {
-private:
-    float time;
-    int phase;
-    int availableReel;
-    int recentReel;
-private:
-    void HandleFirstPhase();
-    void HandleSecondPhase();
-    void HandleThirdPhase();
-    void HandleFourthPhase();
 public:
     OpeningState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -37,6 +28,17 @@ public:
     void EndState() override;
     void SwitchOne() override;
     void SwitchTwo() override;
+
+private:
+    void HandleFirstPhase();
+    void HandleSecondPhase();
+    void HandleThirdPhase();
+    void HandleFourthPhase();
+
+    float time;
+    int phase;
+    int availableReel;
+    int recentReel;
 };
 
 class PlayingState : public GameState
@@ -52,12 +54,6 @@ public:
 
 class ResettingState : public GameState
 {
-private:
-    float time;
-    int phase;
-private:
-    void HandleFirstPhase();
-    void HandleSecondPhase();
 public:
     ResettingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -65,18 +61,17 @@ public:
     void EndState() override;
     void SwitchOne() override;
     void SwitchTwo() override;
+
+private:
+    void HandleFirstPhase();
+    void HandleSecondPhase();
+
+    float time;
+    int phase;
 };
 
 class StoppingState : public GameState
 {
-private:
-    float delay;
-    float time;
-    int phase;
-private:
-    void HandleFirstPhase();
-    void HandleSecondPhase();
-    void HandleThirdPhase();
 public:
     StoppingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -84,18 +79,19 @@ public:
     void EndState() override;
     void SwitchOne() override;
     void SwitchTwo() override;
-};
 
-class ResultState : public GameState
-{
-private:
-    Letter result;
-    int phase;
-    bool isAnimationOver;
 private:
     void HandleFirstPhase();
     void HandleSecondPhase();
     void HandleThirdPhase();
+
+    float delay;
+    float time;
+    int phase;
+};
+
+class ResultState : public GameState
+{
 public:
     ResultState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -103,6 +99,15 @@ public:
     void EndState() override;
     void SwitchOne() override;
     void SwitchTwo() override;
+
+private:
+    void HandleFirstPhase();
+    void HandleSecondPhase();
+    void HandleThirdPhase();
+
+    Letter result;
+    int phase;
+    bool isAnimationOver;
 };
 
 #endif

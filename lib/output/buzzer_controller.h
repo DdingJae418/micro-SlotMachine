@@ -8,20 +8,6 @@
 
 class BuzzerController : public UpdateListener
 {
-private:
-    static BuzzerController* instance;
-    const BuzzerSound* currentSound;
-    NoteIter currentNote;
-    float playSpeed;
-    bool loopSound;
-    float playTime;
-    bool isMute;
-private:
-    BuzzerController();
-    ~BuzzerController() = default;
-    BuzzerController(const BuzzerController&) = delete;
-    BuzzerController& operator=(const BuzzerController&) = delete;
-    void PlayNote(double frequency);
 public:
     static BuzzerController& GetInstance();
     static void DestroyInstance();
@@ -29,6 +15,21 @@ public:
     void Update() override;
     bool IsSoundPlaying();
     void MuteBuzzer(bool value);
+
+private:
+    BuzzerController();
+    ~BuzzerController() = default;
+    BuzzerController(const BuzzerController&) = delete;
+    BuzzerController& operator=(const BuzzerController&) = delete;
+    void PlayNote(double frequency);
+
+    static BuzzerController* instance;
+    const BuzzerSound* currentSound;
+    NoteIter currentNote;
+    float playSpeed;
+    bool loopSound;
+    float playTime;
+    bool isMute;
 };
 
 #endif
