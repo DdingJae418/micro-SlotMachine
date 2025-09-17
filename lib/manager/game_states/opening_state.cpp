@@ -17,7 +17,7 @@ constexpr float ReelSoundSpeed = 10;
 
 
 OpeningState::OpeningState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
-    : gm(gm), fnd(fnd), buzzer(buzzer)
+    : GameState(gm, fnd, buzzer)
 { }
 
 void OpeningState::StartState()
@@ -29,11 +29,11 @@ void OpeningState::StartState()
     recentReel = 0;
 
     // Flicker FND display
-    fnd.SetDisplay(Letter::Play);
-    fnd.StartAnimation(Animation::Flicker, FirstAnimationSpeed);
+    GetFndController().SetDisplay(Letter::Play);
+    GetFndController().StartAnimation(Animation::Flicker, FirstAnimationSpeed);
 
     // Play start sound
-    buzzer.StartSound(&sounds::StartSound, StartSoundSpeed);
+    GetBuzzerController().StartSound(&sounds::StartSound, StartSoundSpeed);
 }
 
 void OpeningState::UpdateState()
@@ -60,7 +60,7 @@ void OpeningState::UpdateState()
 // Wait a second
 void OpeningState::HandleFirstPhase()
 {
-    if (fnd.IsAnimationPlaying()) return;
+    if (GetFndController().IsAnimationPlaying()) return;
 
     time += Time::DeltaTime();
     if(time > 1)
@@ -73,8 +73,8 @@ void OpeningState::HandleFirstPhase()
 // Turn FND screen off
 void OpeningState::HandleSecondPhase()
 {
-    fnd.SetDisplay(Letter::None);
-    fnd.StartAnimation(Animation::Plain);
+    GetFndController().SetDisplay(Letter::None);
+    GetFndController().StartAnimation(Animation::Plain);
     phase++;
 }
 
@@ -94,8 +94,8 @@ void OpeningState::HandleThirdPhase()
             availableReel++;
         else
         {
-            fnd.StartAnimation(Animation::Flicker, SecondAnimationSpeed);
-            buzzer.StartSound(&sounds::StartPlayingSound, StartPlayingSoundSpeed);
+            GetFndController().StartAnimation(Animation::Flicker, SecondAnimationSpeed);
+            GetBuzzerController().StartSound(&sounds::StartPlayingSound, StartPlayingSoundSpeed);
             phase++;
             return;
         }
@@ -120,17 +120,17 @@ void OpeningState::HandleThirdPhase()
     if(changedReel > -1)
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
-        fnd.SetDisplay(num);
-        fnd.StartAnimation(Animation::Plain, 1, 0, recentReel);
-        if (changedReel == recentReel) buzzer.StartSound(&sounds::ReelSound, ReelSoundSpeed);
+        GetFndController().SetDisplay(num);
+        GetFndController().StartAnimation(Animation::Plain, 1, 0, recentReel);
+        if (changedReel == recentReel) GetBuzzerController().StartSound(&sounds::ReelSound, ReelSoundSpeed);
     }
 }
 
 // After flickering animation, change to playing state
 void OpeningState::HandleFourthPhase()
 {
-    if (!fnd.IsAnimationPlaying())
-        gm.SetGameState(State::Playing);
+    if (!GetFndController().IsAnimationPlaying())
+        GetGameManager().SetGameState(State::Playing);
 
     // Rotate reels while playing flickering animation
     auto& reelTime = gm.GetReelTime();
@@ -155,7 +155,7 @@ void OpeningState::HandleFourthPhase()
     if(reelChanged)
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
-        fnd.SetDisplay(num);
+        GetFndController().SetDisplay(num);
     }
 }
 

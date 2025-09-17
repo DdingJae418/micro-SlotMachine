@@ -8,7 +8,7 @@ constexpr float WaitingTime = 0.9;
 
 
 ReadyState::ReadyState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
-    : gm(gm), fnd(fnd), buzzer(buzzer)
+    : GameState(gm, fnd, buzzer)
 { }
 
 void ReadyState::StartState()
@@ -18,22 +18,22 @@ void ReadyState::StartState()
     phase = 0;
 
     // Empty FND display
-    fnd.SetDisplay(Letter::None, false);
-    fnd.StartAnimation(Animation::Plain);
+    GetFndController().SetDisplay(Letter::None, false);
+    GetFndController().StartAnimation(Animation::Plain);
 
     // Play ready sound
-    buzzer.StartSound(&sounds::ReadySong, 2.2, true);
+    GetBuzzerController().StartSound(&sounds::ReadySong, 2.2, true);
 }
 
 void ReadyState::UpdateState()
 {
-    if (fnd.IsAnimationPlaying()) return;
+    if (GetFndController().IsAnimationPlaying()) return;
     
     if (phase == 0)
     {
         // Set 'PLAY' letter and start 'SWIPE' animation at the FND display
-        fnd.SetDisplay(Letter::Play);
-        fnd.StartAnimation(Animation::Swipe, AnimationSpeed);
+        GetFndController().SetDisplay(Letter::Play);
+        GetFndController().StartAnimation(Animation::Swipe, AnimationSpeed);
         phase++;
     }
     else
@@ -44,8 +44,8 @@ void ReadyState::UpdateState()
         // Swipe out 'PLAY' letter
         if(time > WaitingTime)
         {
-            fnd.SetDisplay(Letter::None);
-            fnd.StartAnimation(Animation::Swipe, AnimationSpeed);
+            GetFndController().SetDisplay(Letter::None);
+            GetFndController().StartAnimation(Animation::Swipe, AnimationSpeed);
             time = 0;
             phase = 0;
         }
@@ -55,7 +55,7 @@ void ReadyState::UpdateState()
 void ReadyState::SwitchOne()
 {
     // Change to opening state
-    gm.SetGameState(State::Opening);
+    GetGameManager().SetGameState(State::Opening);
 }
 
 void ReadyState::EndState() { }

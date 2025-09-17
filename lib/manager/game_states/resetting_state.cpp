@@ -14,7 +14,7 @@ constexpr float WaitingTime = 1.5;
 
 
 ResettingState::ResettingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
-    : gm(gm), fnd(fnd), buzzer(buzzer)
+    : GameState(gm, fnd, buzzer)
 { }
 
 void ResettingState::StartState()
@@ -24,18 +24,18 @@ void ResettingState::StartState()
     phase = FirstPhase;
 
     // Reset reels
-    auto& reelTime = gm.GetReelTime();
-    auto& reels = gm.GetReels();
+    auto& reelTime = GetGameManager().GetReelTime();
+    auto& reels = GetGameManager().GetReels();
     std::fill(reelTime.begin(), reelTime.end(), 0);
     std::fill(reels.begin(), reels.end(), 0);
-    gm.SetStoppingReel(0);
+    GetGameManager().SetStoppingReel(0);
 
     // Stop and flicker current screen
-    fnd.StopAnimations();
-    fnd.StartAnimation(Animation::Flicker, FlickerSpeed);
+    GetFndController().StopAnimations();
+    GetFndController().StartAnimation(Animation::Flicker, FlickerSpeed);
 
     // Play reset sound
-    buzzer.StartSound(&sounds::ResetSound, SoundSpeed);
+    GetBuzzerController().StartSound(&sounds::ResetSound, SoundSpeed);
 }
 
 void ResettingState::UpdateState()
@@ -56,22 +56,22 @@ void ResettingState::UpdateState()
 // After flicker animation, play swipe animation
 void ResettingState::HandleFirstPhase()
 {
-    if(fnd.IsAnimationPlaying()) return;
+    if(GetFndController().IsAnimationPlaying()) return;
 
-    fnd.SetDisplay(Letter::None);
-    fnd.StartAnimation(Animation::Swipe, SwipeSpeed);
+    GetFndController().SetDisplay(Letter::None);
+    GetFndController().StartAnimation(Animation::Swipe, SwipeSpeed);
     phase++;
 }
 
 // Wait a little and change to ready state
 void ResettingState::HandleSecondPhase()
 {
-    if(fnd.IsAnimationPlaying()) return;
+    if(GetFndController().IsAnimationPlaying()) return;
 
     time += Time::DeltaTime();
     if (time > WaitingTime)
     {
-        gm.SetGameState(State::Ready);
+        GetGameManager().SetGameState(State::Ready);
     }
 }
 

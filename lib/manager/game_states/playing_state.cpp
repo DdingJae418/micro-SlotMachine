@@ -5,20 +5,20 @@
 
 
 PlayingState::PlayingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
-    : gm(gm), fnd(fnd), buzzer(buzzer)
+    : GameState(gm, fnd, buzzer)
 { }
 
 void PlayingState::StartState()
 {
     // Start playing song
-    buzzer.StartSound(&sounds::PlayingSong, 5, true);
+    GetBuzzerController().StartSound(&sounds::PlayingSong, 5, true);
 }
 
 void PlayingState::UpdateState()
 {
-    auto& reelTime = gm.GetReelTime();
-    auto& reels = gm.GetReels();
-    int stoppingReel = gm.GetStoppingReel();
+    auto& reelTime = GetGameManager().GetReelTime();
+    auto& reels = GetGameManager().GetReels();
+    int stoppingReel = GetGameManager().GetStoppingReel();
 
     for (int i = stoppingReel; i < 4; i++)
         reelTime[i] += Time::DeltaTime();
@@ -28,7 +28,7 @@ void PlayingState::UpdateState()
     // Increase reel numbers
     for (int i = 0; i < 4; i++)
     {
-        if (reelTime[i] > gm.GetReelDelay(i))
+        if (reelTime[i] > GetGameManager().GetReelDelay(i))
         {
             reelTime[i] = 0;
             reels[i] = (reels[i] + 1) % 10;
@@ -40,21 +40,21 @@ void PlayingState::UpdateState()
     if(reelChanged)
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
-        fnd.SetDisplay(num);
-        fnd.StartAnimation(Animation::Plain);
+        GetFndController().SetDisplay(num);
+        GetFndController().StartAnimation(Animation::Plain);
     }
 }
 
 void PlayingState::SwitchOne() 
 { 
     // Stop reel
-    gm.SetGameState(State::Stopping);
+    GetGameManager().SetGameState(State::Stopping);
 }
 
 void PlayingState::SwitchTwo() 
 { 
     // Reset game
-    gm.SetGameState(State::Resetting);
+    GetGameManager().SetGameState(State::Resetting);
 }
 
 void PlayingState::EndState() { }

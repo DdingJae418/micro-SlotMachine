@@ -18,7 +18,7 @@ Letter CheckResult(GameManager& gm);
 
 
 ResultState::ResultState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
-    : gm(gm), fnd(fnd), buzzer(buzzer)
+    : GameState(gm, fnd, buzzer)
 { }
 
 void ResultState::StartState()
@@ -31,7 +31,7 @@ void ResultState::StartState()
     // fnd.SetDisplay(0213);
     // fnd.StartAnimation(Animation::PLAIN);
 
-    result = CheckResult(gm);
+    result = CheckResult(GetGameManager());
     phase = FirstPhase;
     isAnimationOver = false;
 }
@@ -58,14 +58,14 @@ void ResultState::HandleFirstPhase()
 {
     if (result == Letter::Fail)
     {
-        buzzer.StartSound(&sounds::FailSound, FailSoundSpeed);
-        fnd.SetDisplay(Letter::None);
-        fnd.StartAnimation(Animation::Swipe, SwipeSpeed);
+        GetBuzzerController().StartSound(&sounds::FailSound, FailSoundSpeed);
+        GetFndController().SetDisplay(Letter::None);
+        GetFndController().StartAnimation(Animation::Swipe, SwipeSpeed);
     }
     else
     {
-        buzzer.StartSound(&sounds::SuccessSound, SuccessSoundSpeed);
-        fnd.StartAnimation(Animation::RoundRobin, RoundRobinSpeed);
+        GetBuzzerController().StartSound(&sounds::SuccessSound, SuccessSoundSpeed);
+        GetFndController().StartAnimation(Animation::RoundRobin, RoundRobinSpeed);
     }
     phase++;
 }
@@ -73,27 +73,27 @@ void ResultState::HandleFirstPhase()
 // Play writing animation according to the result
 void ResultState::HandleSecondPhase()
 {
-    if (fnd.IsAnimationPlaying()) return;
+    if (GetFndController().IsAnimationPlaying()) return;
 
     // Start writing animation
-    fnd.SetDisplay(result);
+    GetFndController().SetDisplay(result);
     switch (result)
     {
     case Letter::Fail:
-        fnd.SetDisplay(Letter::Fail);
-        fnd.StartAnimation(Animation::WriteFail, WriteSpeed);
+        GetFndController().SetDisplay(Letter::Fail);
+        GetFndController().StartAnimation(Animation::WriteFail, WriteSpeed);
         break;
     case Letter::_1st:
-        fnd.SetDisplay(Letter::_1st);
-        fnd.StartAnimation(Animation::Write1st, WriteSpeed);
+        GetFndController().SetDisplay(Letter::_1st);
+        GetFndController().StartAnimation(Animation::Write1st, WriteSpeed);
         break;
     case Letter::_2nd:
-        fnd.SetDisplay(Letter::_2nd);
-        fnd.StartAnimation(Animation::Write2nd, WriteSpeed);
+        GetFndController().SetDisplay(Letter::_2nd);
+        GetFndController().StartAnimation(Animation::Write2nd, WriteSpeed);
         break;
     case Letter::_3rd:
-        fnd.SetDisplay(Letter::_3rd);
-        fnd.StartAnimation(Animation::Write3rd, WriteSpeed);
+        GetFndController().SetDisplay(Letter::_3rd);
+        GetFndController().StartAnimation(Animation::Write3rd, WriteSpeed);
         break;;
     default:
         break;
@@ -105,7 +105,7 @@ void ResultState::HandleSecondPhase()
 // Enable reset button
 void ResultState::HandleThirdPhase()
 {
-    if (fnd.IsAnimationPlaying()) return;
+    if (GetFndController().IsAnimationPlaying()) return;
 
     isAnimationOver = true;
 }
@@ -114,7 +114,7 @@ void ResultState::SwitchTwo()
 { 
     // Reset game after animation
     if (isAnimationOver)
-        gm.SetGameState(State::Resetting);
+        GetGameManager().SetGameState(State::Resetting);
 }
 
 Letter CheckResult(GameManager& gm)

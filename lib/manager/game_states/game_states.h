@@ -7,9 +7,6 @@
 class ReadyState : public GameState
 {
 private:
-    GameManager& gm;
-    FNDController& fnd;
-    BuzzerController& buzzer;
     float time;
     int phase;
 public:
@@ -24,9 +21,6 @@ public:
 class OpeningState : public GameState
 {
 private:
-    GameManager& gm;
-    FNDController& fnd;
-    BuzzerController& buzzer;
     float time;
     int phase;
     int availableReel;
@@ -47,10 +41,6 @@ public:
 
 class PlayingState : public GameState
 {
-private:
-    GameManager& gm;
-    FNDController& fnd;
-    BuzzerController& buzzer;
 public:
     PlayingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer);
     void StartState() override;
@@ -63,9 +53,6 @@ public:
 class ResettingState : public GameState
 {
 private:
-    GameManager& gm;
-    FNDController& fnd;
-    BuzzerController& buzzer;
     float time;
     int phase;
 private:
@@ -83,9 +70,6 @@ public:
 class StoppingState : public GameState
 {
 private:
-    GameManager& gm;
-    FNDController& fnd;
-    BuzzerController& buzzer;
     float delay;
     float time;
     int phase;
@@ -105,9 +89,6 @@ public:
 class ResultState : public GameState
 {
 private:
-    GameManager& gm;
-    FNDController& fnd;
-    BuzzerController& buzzer;
     Letter result;
     int phase;
     bool isAnimationOver;

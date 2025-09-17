@@ -17,7 +17,7 @@ constexpr float MaxDelay = 1;
 
 
 StoppingState::StoppingState(GameManager& gm, FNDController& fnd, BuzzerController& buzzer)
-    : gm(gm), fnd(fnd), buzzer(buzzer)
+    : GameState(gm, fnd, buzzer)
 { }
 
 void StoppingState::StartState()
@@ -28,22 +28,22 @@ void StoppingState::StartState()
     phase = FirstPhase;
 
     // Play lever sound
-    buzzer.StartSound(&sounds::LeverSound, LeverSoundSpeed);
+    GetBuzzerController().StartSound(&sounds::LeverSound, LeverSoundSpeed);
 
-    auto& reels = gm.GetReels();
-    int stoppingReel = gm.GetStoppingReel();
+    auto& reels = GetGameManager().GetReels();
+    int stoppingReel = GetGameManager().GetStoppingReel();
 
     // Swipe out right side of the stopping reel
     if (stoppingReel < reels.size() - 1)
     {
-        fnd.SetDisplay(Letter::None);
-        fnd.StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel + 1);
+        GetFndController().SetDisplay(Letter::None);
+        GetFndController().StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel + 1);
     }
 
     // Flicker stopping reel at first
     int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
-    fnd.SetDisplay(num, true, stoppingReel, stoppingReel);
-    fnd.StartAnimation(Animation::Flicker, FirstFlickerSpeed, stoppingReel, stoppingReel);
+    GetFndController().SetDisplay(num, true, stoppingReel, stoppingReel);
+    GetFndController().StartAnimation(Animation::Flicker, FirstFlickerSpeed, stoppingReel, stoppingReel);
 }
 
 void StoppingState::UpdateState()
@@ -66,15 +66,15 @@ void StoppingState::UpdateState()
 // Slowly stop reel
 void StoppingState::HandleFirstPhase()
 {
-    auto& reelTime = gm.GetReelTime();
-    auto& reels = gm.GetReels();
-    int stoppingReel = gm.GetStoppingReel();
+    auto& reelTime = GetGameManager().GetReelTime();
+    auto& reels = GetGameManager().GetReels();
+    int stoppingReel = GetGameManager().GetStoppingReel();
 
     reelTime[stoppingReel] += Time::DeltaTime();
     time += Time::DeltaTime();
 
     // Increase stopping reel number, and slow down speed
-    if (reelTime[stoppingReel] > gm.GetReelDelay(stoppingReel) + delay)
+    if (reelTime[stoppingReel] > GetGameManager().GetReelDelay(stoppingReel) + delay)
     {
         reelTime[stoppingReel] = 0;
         reels[stoppingReel] = (reels[stoppingReel] + 1) % 10;
@@ -82,19 +82,19 @@ void StoppingState::HandleFirstPhase()
 
         // Show stopped/stopping reel numbers
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
-        fnd.SetDisplay(num, true, 0, stoppingReel);
+        GetFndController().SetDisplay(num, true, 0, stoppingReel);
 
         if (delay < MaxDelay)
         {
-            if(!fnd.IsAnimationPlaying())
-                fnd.StartAnimation(Animation::Plain, 1, 0, stoppingReel);
-            if(!buzzer.IsSoundPlaying())
-                buzzer.StartSound(&sounds::ReelSound, ReelSoundSpeed);
+            if(!GetFndController().IsAnimationPlaying())
+                GetFndController().StartAnimation(Animation::Plain, 1, 0, stoppingReel);
+            if(!GetBuzzerController().IsSoundPlaying())
+                GetBuzzerController().StartSound(&sounds::ReelSound, ReelSoundSpeed);
         }
         else // Slowed down enough
         {
-            fnd.StartAnimation(Animation::Flicker, LastFlickerSpeed, stoppingReel, stoppingReel);
-            buzzer.StartSound(&sounds::ReelStopSound, LeverSoundSpeed);
+            GetFndController().StartAnimation(Animation::Flicker, LastFlickerSpeed, stoppingReel, stoppingReel);
+            GetBuzzerController().StartSound(&sounds::ReelStopSound, LeverSoundSpeed);
             phase++;
         }
     }
@@ -103,31 +103,31 @@ void StoppingState::HandleFirstPhase()
 // Show remaining reels or go to the result state
 void StoppingState::HandleSecondPhase()
 {
-    if (fnd.IsAnimationPlaying()) return;
+    if (GetFndController().IsAnimationPlaying()) return;
 
-    auto& reels = gm.GetReels();
-    int stoppingReel = gm.GetStoppingReel();
+    auto& reels = GetGameManager().GetReels();
+    int stoppingReel = GetGameManager().GetStoppingReel();
 
     if(stoppingReel < 3)
     {
         int num = reels[0] * 1000 + reels[1] * 100 + reels[2] * 10 + reels[3];
-        fnd.SetDisplay(num, true, stoppingReel + 1);
-        fnd.StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel);
-        gm.SetStoppingReel(stoppingReel + 1);
+        GetFndController().SetDisplay(num, true, stoppingReel + 1);
+        GetFndController().StartAnimation(Animation::Swipe, SwipeSpeed, stoppingReel);
+        GetGameManager().SetStoppingReel(stoppingReel + 1);
         phase++;
     }
     else
     {
-        gm.SetGameState(State::Result);
+        GetGameManager().SetGameState(State::Result);
     }
 }
 
 // Resume playing
 void StoppingState::HandleThirdPhase()
 {
-    if (fnd.IsAnimationPlaying()) return;
+    if (GetFndController().IsAnimationPlaying()) return;
 
-    gm.SetGameState(State::Playing);
+    GetGameManager().SetGameState(State::Playing);
 }
 
 void StoppingState::EndState() { }
